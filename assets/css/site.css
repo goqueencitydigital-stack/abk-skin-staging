@@ -906,3 +906,52 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 .ig-follow-t { font-size: .92rem; max-width: 16em; line-height: 1.4; }
 .ig-follow .btn { margin-top: .4rem; }
 @media (max-width: 899px) { .ig-follow-t { display: none; } }
+
+/* ---- Footer layout ---- */
+.footer-grid { grid-template-columns: 1fr 1fr; gap: 2.25rem 1.5rem; grid-template-areas: "brand brand" "cta cta" "quick svc" "contact contact" "mark mark"; }
+.f-brand { grid-area: brand; } .f-cta { grid-area: cta; } .f-contact { grid-area: contact; }
+.footer-grid > nav.f-col:nth-of-type(1) { grid-area: quick; } .footer-grid > nav.f-col:nth-of-type(2) { grid-area: svc; }
+.f-mark { grid-area: mark; }
+@media (min-width: 900px) {
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.25fr; gap: 2.5rem 2.5rem; grid-template-areas: "brand quick svc cta" "contact quick svc cta" "mark mark mark mark"; }
+}
+.f-word { font-family: var(--f-word); font-size: 1.7rem; letter-spacing: .06em; color: #fff; margin: 0 0 .6rem; }
+.f-tag { font-style: normal; font-family: var(--f-body); font-size: 1rem; line-height: 1.6; color: rgba(251,250,247,.72); max-width: 24em; margin: 0; }
+.f-h { color: var(--pink); font-weight: 600; }
+.f-cta p:not(.f-h) { margin: 0 0 1rem; color: rgba(251,250,247,.75); }
+.f-contact ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
+.f-contact li { display: flex; gap: .7rem; align-items: flex-start; }
+.f-ico { color: var(--pink); flex: none; line-height: 0; margin-top: .2em; }
+.f-contact address { font-style: normal; line-height: 1.55; }
+.f-links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1.1rem 0 0; }
+.f-links a { color: rgba(251,250,247,.75); border-bottom: 1px solid rgba(255,176,202,.35); padding-bottom: 1px; }
+.f-mark { margin: .5rem 0 0; font-family: var(--f-word); font-weight: 500; font-size: clamp(3.6rem, 15.5vw, 13rem); line-height: .85; letter-spacing: .03em; color: rgba(255,176,202,.14); text-align: center; white-space: nowrap; overflow: hidden; user-select: none; }
+
+/* ---- Mobile spacing & layout ---- */
+@media (max-width: 640px) {
+  :root { --s-9: 3.5rem; --s-8: 3rem; --s-7: 2.25rem; }
+  .sec-head { margin-bottom: 1.75rem; }
+  .hero .btn-row { flex-direction: column; align-items: stretch; }
+  .hero .btn-row .btn { width: 100%; }
+  .hero-lede { font-size: 1.05rem; }
+  .panel { margin-left: .6rem; margin-right: .6rem; }
+  .tr-grid { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 86%; overflow-x: auto; scroll-snap-type: x mandatory; gap: .8rem; padding-bottom: .6rem; margin-right: calc(var(--gutter) * -1); padding-right: var(--gutter); scrollbar-width: none; position: relative; }
+  .tr-grid::-webkit-scrollbar { display: none; }
+  .tr-grid > * { scroll-snap-align: start; }
+  .panel .btn-row { flex-direction: column; gap: 1rem; }
+  .ig-grid > li:nth-child(n+8):not(:last-child) { display: none; }
+  .ig-follow .btn { font-size: .78rem; padding: .6em 1em; letter-spacing: .1em; }
+  .ig-follow-h { font-size: 1.15rem; }
+  .btn-row .btn { min-height: 50px; }
+  .cta-band .btn-row { flex-direction: column; align-items: stretch; }
+  .card-grid-2, .card-grid-3 { grid-template-columns: 1fr 1fr; gap: 1.6rem .9rem; }
+  .card-grid .card-title { font-size: 1.05rem; line-height: 1.2; }
+  .card-grid .card-text { font-size: .86rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-grid .card-meta { font-size: .68rem; letter-spacing: .08em; gap: .2rem .6rem; }
+  .card-grid .card-meta span + span { padding-left: .6rem; }
+  .card-grid .card-body { padding-top: .7rem; }
+  .card-grid .card-media { aspect-ratio: 1 / 1; }
+  .prd-grid-home > *:nth-child(n+7) { display: none; }
+  .contact-map { min-height: 230px; }
+  .f-mark { font-size: 17vw; }
+}
