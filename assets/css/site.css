@@ -1030,6 +1030,7 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 /* ---- Membership page v2 ---- */
 .memb-chips { list-style: none; padding: 0; margin: 1.6rem auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
 .memb-chips li { padding: .45rem 1rem; border-radius: 999px; background: var(--pink-25, #FFF4F8); border: 1px solid var(--pink-line); font-size: .88rem; font-weight: 600; }
+@media (min-width: 900px) { .memb-chips { flex-wrap: nowrap; width: max-content; max-width: none; position: relative; left: 50%; transform: translateX(-50%); margin-left: 0; margin-right: 0; } }
 .center-row { justify-content: center; margin-top: 1.75rem; }
 .mplan-grid { display: grid; gap: 1.5rem; align-items: stretch; }
 @media (min-width: 860px) { .mplan-grid { grid-template-columns: 1fr 1fr; gap: 2rem; } }
