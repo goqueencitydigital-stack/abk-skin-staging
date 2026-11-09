@@ -110,13 +110,33 @@
   // Contact form: composes an email in the visitor's own mail app. Nothing is sent from the page.
   d.querySelectorAll('[data-mailto-form]').forEach(function (f) {
     f.addEventListener('submit', function (e) {
-      if (!f.checkValidity()) return;
+      if (!f.checkValidity()) { e.preventDefault(); f.classList.add('was-validated'); var bad = f.querySelector(':invalid'); if (bad) bad.focus(); return; }
       e.preventDefault();
       var v = function (n) { return (f.elements[n] && f.elements[n].value || '').trim(); };
       var name = (v('first') + ' ' + v('last')).trim();
-      var body = v('message') + '\n\n' + name + '\n' + v('email');
+      var body = (v('service') ? 'Service: ' + v('service') + '\n\n' : '') + v('message') + '\n\n' + name + '\n' + v('email') + (v('phone') ? '\n' + v('phone') : '');
       location.href = f.getAttribute('action') + '?subject=' + encodeURIComponent('Question from ' + (name || 'the ABK SKIN website')) + '&body=' + encodeURIComponent(body);
     });
+  });
+
+  // Video library: click to play with sound; only one plays at a time.
+  var allV = [];
+  d.querySelectorAll('[data-vcard]').forEach(function (c) {
+    var v = c.querySelector('video'), b = c.querySelector('[data-vplay]');
+    if (!v || !b) return; allV.push(v);
+    b.addEventListener('click', function () {
+      allV.forEach(function (o) { if (o !== v) o.pause(); });
+      d.querySelectorAll('[data-reel]').forEach(function (o) { o.pause(); });
+      v.controls = true; c.classList.add('is-playing'); var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+      v.focus();
+    });
+    v.addEventListener('ended', function () { c.classList.remove('is-playing'); v.controls = false; v.load(); });
+  });
+  d.querySelectorAll('[data-reels-row]').forEach(function (row) {
+    var sec = row.closest('section'); if (!sec) return;
+    var step = function (dir) { var card = row.querySelector('.vcard'); var w = card ? card.getBoundingClientRect().width + 16 : 300; row.scrollBy({ left: dir * w * 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); };
+    var p = sec.querySelector('[data-reels-prev]'), n = sec.querySelector('[data-reels-next]');
+    if (p) p.addEventListener('click', function () { step(-1); }); if (n) n.addEventListener('click', function () { step(1); });
   });
 
   // Staging review notes: add ?review=1 to a URL to show them (no on-page bubble).
