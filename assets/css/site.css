@@ -30,12 +30,12 @@
   --t-lg: clamp(1.1rem, 1rem + .4vw, 1.32rem);
   --t-h4: 1.12rem;
   --t-h3: clamp(1.3rem, 1.15rem + .55vw, 1.65rem);
-  --t-h2: clamp(2.1rem, 1.45rem + 2.3vw, 3.5rem);
-  --t-h1: clamp(2.6rem, 1.7rem + 3.6vw, 4.9rem);
-  --t-hero: clamp(2.9rem, 1.4rem + 5.4vw, 5.8rem);
+  --t-h2: clamp(2.1rem, 1.45rem + 2.3vw, 3.1rem);
+  --t-h1: clamp(2.6rem, 1.7rem + 3.6vw, 4.3rem);
+  --t-hero: clamp(2.9rem, 1.4rem + 5.4vw, 5.1rem);
 
-  --s-1: .25rem; --s-2: .5rem; --s-3: .75rem; --s-4: 1rem; --s-5: 1.5rem; --s-6: 2rem; --s-7: 3rem; --s-8: 5rem; --s-9: clamp(4rem, 2.6rem + 5vw, 8rem);
-  --wrap: 80rem;
+  --s-1: .25rem; --s-2: .5rem; --s-3: .75rem; --s-4: 1rem; --s-5: 1.5rem; --s-6: 2rem; --s-7: 3rem; --s-8: 5rem; --s-9: clamp(4rem, 2.6rem + 5vw, 6.5rem);
+  --wrap: 78rem;
   --gutter: clamp(1.1rem, .6rem + 2.4vw, 2.5rem);
   --radius: 999px;
   --radius-card: 6px;
@@ -45,7 +45,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { font-size: clamp(16px, calc(6.4px + .78vw), 21px); -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+html { font-size: clamp(15px, calc(9px + .5vw), 18px); -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: var(--t-base); line-height: 1.65; font-weight: 400; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 img, video { display: block; max-width: 100%; height: auto; }
 picture { display: block; }
