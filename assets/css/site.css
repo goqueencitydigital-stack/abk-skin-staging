@@ -965,3 +965,25 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 .f-mark { margin: clamp(2.5rem, 2rem + 3vw, 5rem) 0 0; font-family: var(--f-word); font-weight: 500; font-size: 17.5vw; line-height: .78; letter-spacing: .02em; color: rgba(255,176,202,.13); text-align: center; white-space: nowrap; user-select: none; }
 .f-legal { margin-top: 1.5rem; padding-top: 1.25rem; font-size: .85rem; color: rgba(251,250,247,.5); }
 @media (max-width: 640px) { .f-top { align-items: flex-start; } .f-top-ctas, .f-top-ctas .btn { width: 100%; } .f-legal { flex-direction: column; } }
+
+/* ---- TikTok section (home) ---- */
+.tt-sec { background: var(--ink, #121212); color: rgba(251,250,247,.82); overflow: hidden; }
+.tt-grid { display: grid; gap: 2.25rem; align-items: center; }
+@media (min-width: 1024px) { .tt-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 2fr); gap: 3.5rem; } }
+.tt-badge { display: inline-flex; align-items: center; gap: .6rem; margin: 0 0 1.25rem; padding: .45rem 1rem .45rem .5rem; border-radius: 999px; background: rgba(255,255,255,.08); color: #fff; font-size: .8rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.tt-badge svg { width: 30px; height: 30px; padding: 6px; border-radius: 50%; background: #fff; color: var(--ink, #121212); }
+.tt-sec .sec-title { color: #fff; max-width: 13em; font-size: clamp(2rem, 1.4rem + 1.8vw, 2.9rem); }
+.tt-lede { font-size: 1.05rem; line-height: 1.65; max-width: 30em; margin: 1rem 0 1.75rem; }
+.tt-lede strong { color: var(--pink); font-weight: 600; }
+.tt-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.tt-ghost { background: transparent; color: #fff; border-color: rgba(251,250,247,.45); }
+.tt-ghost:hover { background: #fff; color: var(--ink, #121212); border-color: #fff; }
+.tt-intro .reels-nav { margin-top: 2rem; }
+.tt-sec .reels-btn { color: #fff; border-color: rgba(251,250,247,.35); background: transparent; }
+.tt-sec .reels-btn:hover { background: #fff; color: var(--ink, #121212); }
+.tt-row { grid-auto-columns: minmax(200px, 64%); }
+@media (min-width: 640px) { .tt-row { grid-auto-columns: calc((100% - 2rem) / 3); } }
+.tt-sec .vtitle { color: #fff; }
+.tt-sec .vsrc { color: var(--pink); }
+.tt-sec .vframe { box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+@media (max-width: 1023px) { .tt-intro .reels-nav { display: none; } }
