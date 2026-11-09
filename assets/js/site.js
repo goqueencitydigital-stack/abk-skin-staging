@@ -119,13 +119,8 @@
     });
   });
 
-  // Staging review notes toggle (staging builds only). Add ?review=1 to a URL to open with notes showing.
-  var rt = d.querySelector('[data-review-toggle]');
-  if (rt) {
-    var on = /[?&]review=1/.test(location.search);
-    var setR = function (v) { d.body.classList.toggle('show-review', v); rt.setAttribute('aria-pressed', String(v)); rt.textContent = v ? 'Hide review notes' : 'Show review notes'; };
-    setR(on); rt.addEventListener('click', function () { setR(!d.body.classList.contains('show-review')); });
-  }
+  // Staging review notes: add ?review=1 to a URL to show them (no on-page bubble).
+  if (/[?&]review=1/.test(location.search)) d.body.classList.add('show-review');
 
   // Gentle reveal on scroll
   if (!reduce && 'IntersectionObserver' in window) {

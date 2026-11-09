@@ -838,3 +838,6 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 .reel-wrap figcaption { margin-top: .6rem; color: #555; }
 .club-reel-copy .ticks { margin: var(--s-4) 0; }
 .club-reel-copy .btn { margin-top: var(--s-4); }
+.club-reel-copy .btn-row .btn { margin-top: 0; }
+.club-reel-copy .btn-row { margin-top: var(--s-4); }
+.home-reel .club-reel-copy .rule { margin: var(--s-3) 0 var(--s-4); }
