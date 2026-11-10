@@ -1212,3 +1212,43 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .pill { font-size: clamp(.84rem, .8rem + .2vw, .98rem); }
 .hero-lede { font-weight: 500; }
 @media (max-width: 600px) { .btn { min-height: 50px; } }
+
+/* Mobile hero (Nov 10): Katrina's studio video fills the screen behind the headline */
+@media (max-width: 899px) {
+  .hero.hero-v { padding: 0; background: #121212; min-height: max(600px, min(calc(100svh - 150px), 820px)); display: flex; }
+  .hero-v .hero-mark, .hero-v .hero-film-plate, .hero-v .hero-film-tag { display: none; }
+  .hero-v .hero-grid { position: static; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; width: 100%; min-height: inherit; gap: 0; }
+  .hero-v .hero-film { position: absolute; inset: 0; width: auto; margin: 0; z-index: 0; }
+  .hero-v .hero-film-frame { height: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+  .hero-v .hero-film-frame video { object-position: 50% 30%; }
+  .hero-v .hero-film-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(18,18,18,.18) 0%, rgba(18,18,18,.08) 30%, rgba(18,18,18,.62) 62%, rgba(18,18,18,.86) 100%); }
+  .hero-v .hero-film-toggle { top: 14px; bottom: auto; right: var(--gutter); z-index: 2; }
+  .hero-v .hero-copy { position: relative; z-index: 1; align-self: stretch; width: 100%; padding: 0 0 calc(var(--s-6) + env(safe-area-inset-bottom, 0px)); color: #fff; }
+  .hero-v .pill-hot { background: #FFB0CA; color: #121212; }
+  .hero-v .hero-title { color: #fff; margin-bottom: var(--s-3); }
+  .hero-v .hero-lede { color: rgba(255,255,255,.92); font-size: 1.06rem; line-height: 1.5; }
+  .hero-v .btn-row { margin-top: var(--s-5); gap: .7rem; }
+  .hero-v .btn-primary { background: #FFB0CA; border-color: #FFB0CA; color: #121212; }
+  .hero-v .btn-primary:hover { background: #fff; border-color: #fff; }
+  .hero-v .btn-outline { background: transparent; border-color: rgba(255,255,255,.85); color: #fff; }
+  .hero-v .btn-outline:hover { background: #fff; color: #121212; }
+  .hero-v .btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .hero-v .review-note { position: relative; z-index: 1; }
+}
+@media (max-width: 899px) {
+  .hero.hero-v { min-height: max(540px, calc(100svh - 126px)); }
+  .hero-v .hero-copy { padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px)); }
+  .hero-v .pill-hot { margin-bottom: var(--s-3); }
+  .hero-v .hero-lede { font-size: 1rem; line-height: 1.45; max-width: 26em; }
+  .hero-v .btn-row { margin-top: var(--s-4); gap: .6rem; }
+  .hero-v .hero-film-toggle { min-height: 34px; padding: .3rem .8rem; font-size: .66rem; letter-spacing: .12em; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .hero-v .hero-copy { max-width: 560px; }
+  .hero-v .btn-row { flex-direction: row; }
+  .hero-v .btn-row .btn { width: auto; flex: 1; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .hero-v .hero-copy { max-width: 620px; }
+  .hero-v .hero-lede { font-size: 1.16rem; }
+}
