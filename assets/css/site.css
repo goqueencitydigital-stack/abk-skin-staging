@@ -1329,3 +1329,16 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 /* Premium tier ribbon centered on the card edge */
 .club-grid, .mplan-grid { padding-top: 1rem; }
 @media (max-width: 859px) { .mplan-featured { padding-top: 2.6rem; } }
+
+/* ABK Method cards v2: number on top, link row at bottom (no text over numerals) */
+.mh-grid li { min-height: 0; padding: 1.6rem 1.5rem 0; background: #fff; border: 1px solid var(--pink-line); }
+.mh-top-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: 1.1rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--pink-line); }
+.mh-grid .mh-n { position: static; font-family: var(--f-display); font-weight: 600; font-size: 2.6rem; line-height: 1; letter-spacing: -.02em; color: #B0125F; pointer-events: none; }
+.mh-step { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(18,18,18,.55); }
+.mh-grid h3 { margin-bottom: .6rem; }
+.mh-grid p { margin-bottom: 1.4rem; }
+.mh-go { margin: auto -1.5rem 0; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: .75rem; background: #FDE3EC; border-top: 1px solid var(--pink-line); color: #B0125F; font-size: .78rem; }
+.mh-arrow { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; flex: none; transition: background .2s ease, color .2s ease; }
+.mh-arrow svg { width: 14px; height: 14px; }
+@media (hover: hover) { .mh-grid li:hover .mh-arrow { background: #B0125F; color: #fff; } .mh-grid li:hover .mh-go svg { transform: none; } }
+@media (max-width: 599px) { .mh-grid li { min-height: 0; } .mh-grid .mh-n { font-size: 2.2rem; } }
