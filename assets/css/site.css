@@ -1187,3 +1187,28 @@ h2.lw { font-size: calc(var(--t-h2) * .82); }
 /* Sticky mobile booking bar: long treatment names may wrap to two lines */
 .mobile-book .btn { white-space: normal; font-size: .96rem; padding-left: 1em; padding-right: 1em; line-height: 1.25; }
 @media (max-width: 480px) { :root { --t-h1: 2.4rem; } }
+
+/* Scale dial-back (Nov 10): about halfway between the original and the big & bold pass */
+html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
+:root {
+  --t-base: clamp(1.04rem, .99rem + .22vw, 1.16rem);
+  --t-lg: clamp(1.14rem, 1rem + .5vw, 1.4rem);
+  --t-h3: clamp(1.36rem, 1.15rem + .7vw, 1.8rem);
+  --t-h2: clamp(2.15rem, 1.35rem + 2.7vw, 3.45rem);
+  --t-h1: clamp(2.6rem, 1.55rem + 4vw, 4.7rem);
+  --t-hero: clamp(2.6rem, 1.1rem + 4vw, 4.3rem);
+}
+@media (max-width: 480px) { :root { --t-h1: 2.35rem; } }
+@media (min-width: 1024px) { :root { --header-h: 88px; } }
+.hero-title { font-size: min(var(--t-hero), 11cqi); }
+.hero-lede { font-size: clamp(1.12rem, .98rem + .6vw, 1.42rem); max-width: 31em; }
+.btn { font-size: 1rem; min-height: 50px; padding: .8em 1.6em; }
+.btn-sm { min-height: 44px; font-size: .96rem; }
+.club-card .btn { min-height: 52px; }
+.nav-link { font-size: .95rem; }
+@media (min-width: 1181px) and (max-width: 1439px) { .nav-link { font-size: .9rem; } }
+@media (min-width: 1024px) and (max-width: 1180px) { .nav-link { font-size: .86rem; } }
+.wordmark { font-size: clamp(1.5rem, 1.15rem + 1.05vw, 2.2rem); }
+.pill { font-size: clamp(.84rem, .8rem + .2vw, .98rem); }
+.hero-lede { font-weight: 500; }
+@media (max-width: 600px) { .btn { min-height: 50px; } }
