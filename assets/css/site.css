@@ -709,6 +709,15 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 .mh-grid li { position: relative; overflow: hidden; min-height: 230px; padding: 1.5rem 1.4rem; border: 1px solid var(--pink-line); border-radius: 4px; background: linear-gradient(180deg, #fff 0%, #FDE3EC 60%, #F9C9DA 100%); }
 .mh-grid h3 { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; font-size: 1.45rem; margin-bottom: .55rem; }
 .mh-grid p { position: relative; z-index: 1; margin: 0; font-size: .96rem; line-height: 1.5; }
+.mh-grid li { display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.mh-link { color: inherit; text-decoration: none; }
+.mh-link::after { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: 4px; }
+.mh-link:focus-visible { outline: none; }
+.mh-grid li:focus-within { outline: 3px solid var(--ink, #121212); outline-offset: 3px; }
+.mh-go { position: relative; z-index: 1; margin-top: auto; padding-top: 1rem; display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #B0125F; }
+.mh-go svg { width: 14px; height: 14px; transition: transform .2s ease; }
+@media (hover: hover) { .mh-grid li:hover { transform: translateY(-3px); border-color: #B0125F; box-shadow: 0 10px 24px rgba(176,18,95,.12); } .mh-grid li:hover .mh-go svg { transform: translateX(3px); } .mh-grid li:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; } }
+@media (prefers-reduced-motion: reduce) { .mh-grid li, .mh-go svg { transition: none; } .mh-grid li:hover { transform: none; } }
 .mh-n { position: absolute; right: .9rem; bottom: -.18em; font-family: var(--f-word); font-weight: 400; font-size: 7.2rem; line-height: 1; color: rgba(255,255,255,.62); pointer-events: none; }
 
 .sec-panel { padding: 0 clamp(.5rem, 1.9vw, 1.75rem); }
