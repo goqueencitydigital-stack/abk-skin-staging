@@ -1111,5 +1111,79 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 @media (min-width: 900px) and (max-width: 1365px) {
   .hero-v .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); }
   .hero-v .hero-film { width: 100%; margin-right: var(--s-2); }
-  .hero-v .hero-title { font-size: clamp(2.6rem, 1rem + 3.4vw, 3.9rem); }
 }
+
+/* =========================================================
+   Big & bold scale (Nov 2026): larger type, heavier weights,
+   chunkier buttons and navigation across the whole site.
+   ========================================================= */
+html { font-size: clamp(16px, calc(10.4px + .5vw), 19px); }
+:root {
+  --t-xs: .9rem;
+  --t-sm: 1.02rem;
+  --t-base: clamp(1.06rem, 1rem + .25vw, 1.2rem);
+  --t-lg: clamp(1.18rem, 1.02rem + .6vw, 1.5rem);
+  --t-h4: 1.22rem;
+  --t-h3: clamp(1.42rem, 1.15rem + .85vw, 1.95rem);
+  --t-h2: clamp(2.25rem, 1.3rem + 3.1vw, 3.85rem);
+  --t-h1: clamp(2.7rem, 1.5rem + 4.4vw, 5.2rem);
+  --t-hero: clamp(2.9rem, 1.2rem + 6.4vw, 6.3rem);
+}
+@media (min-width: 1024px) { :root { --header-h: 92px; } }
+
+/* Headings: heavier and tighter */
+h1, h2, .display, .sec-title, .page-title, .svc-title, .prd-name, .cta-band h2, .visit-grid h2, .founder-copy h2 { font-weight: 700; letter-spacing: -.012em; line-height: 1.02; }
+.hero-title { font-weight: 700; line-height: .98; letter-spacing: -.018em; }
+h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .variant h3, .steps h3, .method-steps h3, .prose h3, .side-h, .faq-item summary, .tr-name { font-weight: 600; }
+
+/* Lead copy: bigger and more confident */
+.hero-lede { font-size: clamp(1.15rem, .98rem + .75vw, 1.6rem); font-weight: 500; line-height: 1.45; max-width: 30em; }
+.page-lede, .svc-lede, .sec-intro, .prd-desc { font-weight: 500; }
+strong, b { font-weight: 700; }
+
+/* Buttons: chunkier pills */
+.btn { font-size: 1.02rem; font-weight: 600; min-height: 54px; padding: .85em 1.7em; letter-spacing: .015em; }
+.btn-sm { min-height: 46px; padding: .6em 1.25em; font-size: .98rem; }
+.btn-xs { min-height: 40px; padding: .5em 1.05em; font-size: .88rem; font-weight: 600; }
+.club-card .btn { min-height: 56px; }
+
+/* Navigation and header */
+.nav-link { font-size: .98rem; font-weight: 600; letter-spacing: .03em; }
+.wordmark { font-size: clamp(1.55rem, 1.15rem + 1.2vw, 2.35rem); }
+.header-actions .icon-btn svg { width: 23px; height: 23px; }
+@media (min-width: 768px) {
+  .announce-method { font-size: .98rem; font-weight: 700; }
+  .announce-text, .announce-link { font-size: 1rem; }
+}
+.announce-link { font-weight: 700; }
+
+/* Labels */
+.pill { font-size: clamp(.86rem, .8rem + .25vw, 1.02rem); font-weight: 600; padding: .45em 1.1em; }
+.pill-hot { font-size: .95rem; font-weight: 600; }
+.eyebrow { font-size: .95rem; font-weight: 600; }
+.eyebrow-sm, .tr-label { font-size: .86rem; font-weight: 600; }
+.text-link { font-size: .95rem; font-weight: 600; }
+.tr-price, .prd-price, .plan-price { font-weight: 600; }
+
+/* Tablet-landscape: keep the nav on one line */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .nav-link { font-size: .86rem; letter-spacing: .01em; }
+  .wordmark { font-size: 1.5rem; }
+}
+@media (max-width: 600px) {
+  .btn { min-height: 52px; }
+}
+/* Hero headline: as big as its column allows ("INTENTIONALLY." is the longest word, ~7.9em wide) */
+.hero-copy { container-type: inline-size; }
+.hero-title { font-size: min(var(--t-hero), 12.3cqi); max-width: none; }
+/* 1181–1439px: the Book now button is visible, so tighten the nav slightly */
+@media (min-width: 1181px) and (max-width: 1439px) {
+  .nav-list { gap: clamp(1rem, 1.5vw, 1.5rem); }
+  .nav-link { font-size: .92rem; letter-spacing: .02em; }
+}
+/* Long-word headings (class added at build time) */
+h1.lw { font-size: calc(var(--t-h1) * .74); }
+h2.lw { font-size: calc(var(--t-h2) * .82); }
+/* Sticky mobile booking bar: long treatment names may wrap to two lines */
+.mobile-book .btn { white-space: normal; font-size: .96rem; padding-left: 1em; padding-right: 1em; line-height: 1.25; }
+@media (max-width: 480px) { :root { --t-h1: 2.4rem; } }
