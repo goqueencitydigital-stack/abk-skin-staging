@@ -757,7 +757,7 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 .club-grid { display: grid; gap: var(--s-5); max-width: 54rem; margin: 0 auto; }
 @media (min-width: 760px) { .club-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
 .club-card { position: relative; display: flex; flex-direction: column; background: #fff; border-radius: 4px; padding: 2rem clamp(1.25rem, 1rem + 1.4vw, 2.1rem) 1.6rem; box-shadow: 0 1px 0 var(--pink-line); }
-.club-ribbon { position: absolute; top: -.85rem; right: 1.4rem; margin: 0; background: var(--hot); color: var(--ink); font-family: var(--f-body); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; padding: .35em .8em; border-radius: 4px; }
+.club-ribbon { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; z-index: 2; margin: 0; background: var(--hot); color: var(--ink); font-family: var(--f-body); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; padding: .35em .8em; border-radius: 4px; }
 .club-top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; }
 .club-top .tr-label { margin: 0; }
 .club-tag { margin: 0; background: #2a2a2a; color: #fff; font-size: .78rem; padding: .35em .6em; border-radius: 4px; letter-spacing: .02em; }
@@ -1045,7 +1045,7 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 @media (min-width: 860px) { .mplan-grid { grid-template-columns: 1fr 1fr; gap: 2rem; } }
 .mplan { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--pink-line); border-radius: 22px; padding: clamp(1.75rem, 1.2rem + 2vw, 2.75rem); }
 .mplan-featured { background: var(--ink, #121212); color: rgba(251,250,247,.84); border-color: var(--ink, #121212); }
-.mplan-ribbon { position: absolute; top: 1.4rem; right: 1.4rem; margin: 0; padding: .35rem .85rem; border-radius: 999px; background: var(--pink); color: var(--ink); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.mplan-ribbon { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; z-index: 2; box-shadow: 0 0 0 4px #fff; margin: 0; padding: .35rem .85rem; border-radius: 999px; background: var(--pink); color: var(--ink); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .mplan-tier { margin: 0 0 .5rem; font-size: .78rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--pink-ink); }
 .mplan-featured .mplan-tier { color: var(--pink); }
 .mplan-name { font-family: var(--f-display); font-weight: 600; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); letter-spacing: .03em; margin: 0 0 1rem; }
@@ -1087,7 +1087,7 @@ h3, .h3, .card-title, .path-body h3, .known-t, .plan-card h3, .plan-card h2, .va
 .how-steps { grid-template-columns: 1fr; }
 @media (min-width: 760px) { .how-steps { grid-template-columns: repeat(3, 1fr); } }
 .narrow-wide { max-width: 62rem; }
-@media (max-width: 640px) { .svc-jump { margin-top: var(--s-6); } .mplan-ribbon { position: static; align-self: flex-start; margin-bottom: 1rem; } .reel-feature-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .svc-jump { margin-top: var(--s-6); } .reel-feature-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) {
   .cmp-wrap { overflow: visible; border: 0; background: transparent; border-radius: 0; }
   .cmp { min-width: 0; }
@@ -1325,3 +1325,7 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .cart-totals dt { white-space: nowrap; }
 .cart-totals dd { font-weight: 600; }
 .cart-img img { object-fit: contain; background: #FCEFF4; padding: 6px; }
+
+/* Premium tier ribbon centered on the card edge */
+.club-grid, .mplan-grid { padding-top: 1rem; }
+@media (max-width: 859px) { .mplan-featured { padding-top: 2.6rem; } }
