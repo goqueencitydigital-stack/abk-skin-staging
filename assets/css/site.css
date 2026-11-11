@@ -1438,3 +1438,4 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .vz-map-fallback { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: .6rem; text-align: center; color: var(--pink-ink); background: var(--pink-25); font-weight: 600; }
 .vz-map-fallback svg { width: 32px; height: 32px; }
 .vz-map-card iframe { position: relative; z-index: 1; }
+.plan-grid.plan-grid-one { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
