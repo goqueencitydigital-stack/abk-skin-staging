@@ -1342,3 +1342,16 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .mh-arrow svg { width: 14px; height: 14px; }
 @media (hover: hover) { .mh-grid li:hover .mh-arrow { background: #B0125F; color: #fff; } .mh-grid li:hover .mh-go svg { transform: none; } }
 @media (max-width: 599px) { .mh-grid li { min-height: 0; } .mh-grid .mh-n { font-size: 2.2rem; } }
+
+/* Homepage corrections (Nov 11) */
+.hero-lede + .hero-lede-2 { margin-top: .7em; font-weight: 400; }
+.club-title-link { color: inherit; text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-size: 0 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
+.club-title-link:hover, .club-title-link:focus-visible { background-size: 100% 2px; }
+.club-title-link:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 2px; }
+@media (prefers-reduced-motion: reduce) { .club-title-link { transition: none; } }
+.tag-soon { background: var(--ink, #121212); color: #fff; }
+.prd-price-soon { font-weight: 500; color: var(--pink-ink, #B0125F); }
+.sku-soon .btn-row { margin-top: 1rem; }
+.welcome-film { position: relative; margin: 0; border-radius: var(--r-lg, 18px); overflow: hidden; aspect-ratio: 4 / 5; background: #111; }
+.welcome-film video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.welcome-film .reel-toggle { position: absolute; right: .8rem; bottom: .8rem; }
