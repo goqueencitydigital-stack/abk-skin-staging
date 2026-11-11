@@ -1388,3 +1388,14 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .phase p { margin: 0; font-size: var(--t-sm); color: var(--ink-2); }
 
 @media (min-width: 760px) { .film-sec-flip { grid-template-columns: 1fr minmax(240px, 320px); } .film-sec-flip .feature-film { order: 2; } }
+
+/* Home client story panel */
+.testimonial-home .story-panel { margin: 0; background: var(--pink-25); border-radius: var(--radius-card, 18px); padding: 1.25rem; gap: 1.75rem; }
+.testimonial-home .story-panel .feature-film { width: 100%; max-width: 380px; }
+.testimonial-home .story-panel .film-copy { max-width: 38rem; }
+@media (min-width: 760px) { .testimonial-home .story-panel { grid-template-columns: minmax(280px, 380px) 1fr; padding: 2.5rem; gap: 3rem; align-items: center; } }
+@media (min-width: 1100px) { .testimonial-home .story-panel { padding: 3rem 4rem; gap: 4.5rem; } }
+
+/* Alignment fixes: keep .wrap sections centered and CTA band aligned to content edges */
+.wrap.film-sec { margin-left: auto; margin-right: auto; }
+.cta-band .cta-inner { width: calc(100% - 2 * var(--gutter)); max-width: calc(var(--wrap) - 2 * var(--gutter)); margin-left: auto; margin-right: auto; }
