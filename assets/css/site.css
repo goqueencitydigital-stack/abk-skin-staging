@@ -1376,3 +1376,13 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 @media (min-width: 760px) { .film-sec-wide { grid-template-columns: minmax(260px, 340px) 1fr; } }
 .nowrap { white-space: nowrap; }
 .testimonial-home { padding-top: 0; } .testimonial-home .film-sec { margin-top: 0; }
+
+/* BioRePeel two phases */
+.phase-media { width: min(100%, 360px); }
+.phase-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 62% 45%; border-radius: var(--radius-card, 18px); display: block; }
+@media (min-width: 760px) { .phase-sec .phase-media { width: 100%; } }
+.phase-list { display: grid; gap: 1rem; margin-top: 1.25rem; }
+.phase-sec { align-items: start; }
+.phase { background: var(--pink-25); border-radius: var(--radius-card, 18px); padding: 1.1rem 1.25rem; }
+.phase .h3 { font-size: 1.15rem; margin: 0 0 .35rem; }
+.phase p { margin: 0; font-size: var(--t-sm); color: var(--ink-2); }
