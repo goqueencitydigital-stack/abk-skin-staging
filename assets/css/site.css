@@ -1383,6 +1383,8 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 @media (min-width: 760px) { .phase-sec .phase-media { width: 100%; } }
 .phase-list { display: grid; gap: 1rem; margin-top: 1.25rem; }
 .phase-sec { align-items: start; }
+.phase-media-pair { display: grid; gap: 1rem; }
+.phase-media-pair img { aspect-ratio: 1820 / 2048; object-fit: contain; object-position: 50% 50%; }
 .phase { background: var(--pink-25); border-radius: var(--radius-card, 18px); padding: 1.1rem 1.25rem; }
 .phase .h3 { font-size: 1.15rem; margin: 0 0 .35rem; }
 .phase p { margin: 0; font-size: var(--t-sm); color: var(--ink-2); }
