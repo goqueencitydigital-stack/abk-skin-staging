@@ -1399,3 +1399,4 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 /* Alignment fixes: keep .wrap sections centered and CTA band aligned to content edges */
 .wrap.film-sec { margin-left: auto; margin-right: auto; }
 .cta-band .cta-inner { width: calc(100% - 2 * var(--gutter)); max-width: calc(var(--wrap) - 2 * var(--gutter)); margin-left: auto; margin-right: auto; }
+@media (max-width: 400px) { .cta-band .cta-inner { padding-left: 1rem; padding-right: 1rem; } .cta-band h2 { font-size: clamp(1.6rem, 8vw, 2rem); } }
