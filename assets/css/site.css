@@ -1386,3 +1386,5 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .phase { background: var(--pink-25); border-radius: var(--radius-card, 18px); padding: 1.1rem 1.25rem; }
 .phase .h3 { font-size: 1.15rem; margin: 0 0 .35rem; }
 .phase p { margin: 0; font-size: var(--t-sm); color: var(--ink-2); }
+
+@media (min-width: 760px) { .film-sec-flip { grid-template-columns: 1fr minmax(240px, 320px); } .film-sec-flip .feature-film { order: 2; } }
