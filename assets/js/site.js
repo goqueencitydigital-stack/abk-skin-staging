@@ -107,15 +107,45 @@
   // Header search icon lands on the shop with the search box focused.
   if (/[?&]search=1/.test(location.search)) { var sq = d.querySelector('[data-shop-q]'); if (sq) { sq.focus(); } }
 
-  // Contact form: composes an email in the visitor's own mail app. Nothing is sent from the page.
-  d.querySelectorAll('[data-mailto-form]').forEach(function (f) {
+  // Contact form: submits to Wix Forms (ABK SKIN Contact Form) with a Wix visitor token.
+  d.querySelectorAll('[data-wix-form]').forEach(function (f) {
+    var formId = f.getAttribute('data-wix-form'), keys = JSON.parse(f.getAttribute('data-wix-fields') || '{}');
+    var clientId = d.body.getAttribute('data-wix-client'), API = 'https://www.wixapis.com', KEY = 'abk.wix.session.v1';
+    var status = f.querySelector('[data-cf-status]'), btn = f.querySelector('[data-cf-submit]'), email = f.getAttribute('data-fallback-email');
+    var phoneEl = f.elements.phone;
+    var say = function (msg, kind) { status.className = 'cf-status' + (kind ? ' is-' + kind : ''); status.innerHTML = msg; if (msg) status.focus(); };
+    var token = function () {
+      try { var t = JSON.parse(localStorage.getItem(KEY)); if (t && t.access && t.exp > Date.now()) return Promise.resolve(t.access); } catch (e) {}
+      return fetch(API + '/oauth2/token', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ clientId: clientId, grantType: 'anonymous' }) })
+        .then(function (r) { if (!r.ok) throw new Error('token'); return r.json(); })
+        .then(function (j) { try { localStorage.setItem(KEY, JSON.stringify({ access: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in - 120) * 1000 })); } catch (e) {} return j.access_token; });
+    };
+    var e164 = function (raw) {
+      var s = (raw || '').trim(); if (!s) return '';
+      var dg = s.replace(/\D/g, '');
+      if (s.charAt(0) === '+') return dg.length >= 8 && dg.length <= 15 ? '+' + dg : null;
+      if (dg.length === 10) return '+1' + dg;
+      if (dg.length === 11 && dg.charAt(0) === '1') return '+' + dg;
+      return null;
+    };
+    if (phoneEl) phoneEl.addEventListener('input', function () { phoneEl.setCustomValidity(''); });
     f.addEventListener('submit', function (e) {
-      if (!f.checkValidity()) { e.preventDefault(); f.classList.add('was-validated'); var bad = f.querySelector(':invalid'); if (bad) bad.focus(); return; }
       e.preventDefault();
       var v = function (n) { return (f.elements[n] && f.elements[n].value || '').trim(); };
-      var name = (v('first') + ' ' + v('last')).trim();
-      var body = (v('service') ? 'Service: ' + v('service') + '\n\n' : '') + v('message') + '\n\n' + name + '\n' + v('email') + (v('phone') ? '\n' + v('phone') : '');
-      location.href = f.getAttribute('action') + '?subject=' + encodeURIComponent('Question from ' + (name || 'the ABK SKIN website')) + '&body=' + encodeURIComponent(body);
+      var ph = e164(v('phone'));
+      if (phoneEl) phoneEl.setCustomValidity(ph === null ? 'Enter a 10-digit US phone number, or include your country code with a +.' : '');
+      if (!f.checkValidity()) { f.classList.add('was-validated'); var bad = f.querySelector(':invalid'); if (bad) { bad.focus(); if (bad.reportValidity) bad.reportValidity(); } return; }
+      if (v('company')) { f.reset(); say('Thank you. Your message has been sent.', 'ok'); return; }
+      var data = {};
+      ['first', 'last', 'email', 'service', 'message'].forEach(function (n) { if (v(n) && keys[n]) data[keys[n]] = v(n); });
+      if (ph && keys.phone) data[keys.phone] = ph;
+      btn.disabled = true; btn.setAttribute('aria-busy', 'true'); say('Sending your message\u2026');
+      var send = function (tok) { return fetch(API + '/form-submission-service/v4/submissions', { method: 'POST', headers: { 'content-type': 'application/json', authorization: tok }, body: JSON.stringify({ submission: { formId: formId, submissions: data } }) }); };
+      token().then(function (tok) { return send(tok).then(function (r) { if (r.status === 401) { try { localStorage.removeItem(KEY); } catch (x) {} return token().then(send); } return r; }); })
+        .then(function (r) { if (!r.ok) throw new Error('submit ' + r.status); return r.json(); })
+        .then(function () { f.reset(); f.classList.remove('was-validated'); say('Thank you, ' + data[keys.first].replace(/[<>&"]/g, '') + '. Your message has been sent, and ABK SKIN will reply by email.', 'ok'); if (window.abkTrack) window.abkTrack('contact-submit'); })
+        .catch(function () { say('Sorry, your message could not be sent just now. Please try again, or email <a href="mailto:' + email + '">' + email + '</a>.', 'err'); })
+        .then(function () { btn.disabled = false; btn.removeAttribute('aria-busy'); });
     });
   });
 

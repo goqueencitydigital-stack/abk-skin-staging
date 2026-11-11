@@ -1356,3 +1356,9 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 @media (min-width: 900px) { .welcome-media { display: flex; align-items: center; justify-content: center; } .welcome-film { width: auto; height: min(84svh, 760px); } }
 .welcome-film video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .welcome-film .reel-toggle { position: absolute; right: .8rem; bottom: .8rem; }
+.cf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cf-status { margin: .75rem 0 0; font-size: .95rem; min-height: 1.4em; }
+.cf-status:focus { outline: none; }
+.cf-status.is-ok { color: #1b6b3a; font-weight: 500; }
+.cf-status.is-err { color: var(--pink-ink, #B0125F); font-weight: 500; }
+.cf-status.is-err a { color: inherit; text-decoration: underline; }
