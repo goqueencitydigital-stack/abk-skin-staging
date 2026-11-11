@@ -1362,3 +1362,18 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .cf-status.is-ok { color: #1b6b3a; font-weight: 500; }
 .cf-status.is-err { color: var(--pink-ink, #B0125F); font-weight: 500; }
 .cf-status.is-err a { color: inherit; text-decoration: underline; }
+
+/* Feature videos (microneedling, product demo, before/after) */
+.feature-film { position: relative; margin: 0; border-radius: var(--radius-card, 18px); overflow: hidden; background: #111; width: min(100%, 360px); aspect-ratio: 9 / 16; }
+.feature-film video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.feature-film .reel-toggle { position: absolute; right: .7rem; bottom: .7rem; }
+.film-sec { display: grid; gap: 1.5rem; align-items: center; margin: 2.5rem 0; justify-items: center; }
+.film-copy { max-width: 34rem; }
+.film-copy .h2 { margin-top: .3rem; }
+.film-transcript { margin-top: 1rem; border-top: 1px solid var(--line, #e8dfe2); padding-top: .8rem; }
+.film-transcript summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.film-transcript p { font-size: .95rem; color: var(--muted, #555); }
+.prd-film { margin-top: 2rem; }
+.prd-film .feature-film { width: min(100%, 300px); margin-top: .6rem; }
+@media (min-width: 760px) { .film-sec { grid-template-columns: minmax(240px, 320px) 1fr; justify-items: start; gap: 2.5rem; } .film-sec .feature-film { width: 100%; } }
+@media (min-width: 760px) { .film-sec-wide { grid-template-columns: minmax(260px, 340px) 1fr; } }
