@@ -1370,11 +1370,9 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .film-sec { display: grid; gap: 1.5rem; align-items: center; margin: 2.5rem 0; justify-items: center; }
 .film-copy { max-width: 34rem; }
 .film-copy .h2 { margin-top: .3rem; }
-.film-transcript { margin-top: 1rem; border-top: 1px solid var(--line, #e8dfe2); padding-top: .8rem; }
-.film-transcript summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
-.film-transcript p { font-size: .95rem; color: var(--muted, #555); }
 .prd-film { margin-top: 2rem; }
 .prd-film .feature-film { width: min(100%, 300px); margin-top: .6rem; }
 @media (min-width: 760px) { .film-sec { grid-template-columns: minmax(240px, 320px) 1fr; justify-items: start; gap: 2.5rem; } .film-sec .feature-film { width: 100%; } }
 @media (min-width: 760px) { .film-sec-wide { grid-template-columns: minmax(260px, 340px) 1fr; } }
 .nowrap { white-space: nowrap; }
+.testimonial-home { padding-top: 0; } .testimonial-home .film-sec { margin-top: 0; }
