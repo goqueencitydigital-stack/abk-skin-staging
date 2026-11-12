@@ -175,8 +175,36 @@
   // Gentle reveal on scroll
   if (!reduce && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
-    d.querySelectorAll('.sec-head, .path-card, .known-list li, .card:not([hidden]), .plan-card, .concern-card, .method-steps li, .tr-card, .club-card, .mh-grid li').forEach(function (el) {
+    d.querySelectorAll('.sec-head, .path-card, .known-list li, .card:not([hidden]), .plan-card, .concern-card, .method-steps li, .tr-card, .club-card, .mh-grid li, .jr-card').forEach(function (el) {
       if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('reveal'); io.observe(el); }
     });
   }
+  // ---------- Journal topic filters ----------
+  (function () {
+    var bar = d.querySelector('[data-jr-filters]'), grid = d.querySelector('[data-jr-grid]');
+    if (!bar || !grid) return;
+    var status = d.querySelector('[data-jr-status]');
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-jr-filter]');
+      if (!b) return;
+      var t = b.getAttribute('data-jr-filter'), shown = 0;
+      bar.querySelectorAll('[data-jr-filter]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      grid.querySelectorAll('[data-topic]').forEach(function (li) { var on = t === 'all' || li.getAttribute('data-topic') === t; li.hidden = !on; if (on) { shown++; li.classList.add('is-in'); } });
+      if (status) status.textContent = 'Showing ' + shown + (shown === 1 ? ' guide' : ' guides');
+    });
+  })();
+  // ---------- Article table of contents ----------
+  (function () {
+    var toc = d.querySelector('.art-toc');
+    if (!toc) return;
+    if (window.matchMedia('(max-width: 999px)').matches) toc.removeAttribute('open');
+    var links = toc.querySelectorAll('a[href^="#"]');
+    if (!('IntersectionObserver' in window) || !links.length) return;
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (l) { l.classList.remove('is-active'); l.removeAttribute('aria-current'); }); var a = map[e.target.id]; if (a) { a.classList.add('is-active'); a.setAttribute('aria-current', 'true'); } } });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    Object.keys(map).forEach(function (id) { var h = d.getElementById(id); if (h) obs.observe(h); });
+  })();
 })();
