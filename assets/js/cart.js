@@ -176,7 +176,21 @@
         '<button type="button" class="link-btn" data-line-remove>Remove<span class="sr-only"> ' + esc(name) + '</span></button></div></div>' +
         '<p class="cart-line-total">' + esc(money(li.lineItemPrice)) + '</p></li>';
     }).join('');
-    $('[data-cart-subtotal]').textContent = money(cart.subtotalAfterDiscounts || cart.subtotal);
+    var subM = cart.subtotalAfterDiscounts || cart.subtotal;
+    $('[data-cart-subtotal]').textContent = money(subM);
+    // Shipping preview. Wix applies the same rule at checkout: $13 flat, free over $100 (US).
+    var rate = +page.getAttribute('data-ship-rate') || 0, free = +page.getAttribute('data-ship-free') || 0;
+    var sub = subM ? Number(subM.amount) || 0 : 0;
+    var isFree = free && sub >= free, ship = isFree ? 0 : rate;
+    var usd = function (n) { return '$' + n.toFixed(2); };
+    $('[data-cart-shipping]').textContent = isFree ? 'Free' : usd(rate);
+    $('[data-cart-total]').textContent = usd(sub + ship);
+    var t = $('[data-ship-text]'), bar = $('[data-ship-bar]'), meter = $('[data-ship-meter]');
+    if (free && t) {
+      t.innerHTML = isFree ? '<strong>Your order ships free.</strong>' : 'You are <strong>' + usd(Math.max(0.01, free - sub)) + '</strong> away from free shipping.';
+      bar.style.width = Math.min(100, sub / free * 100) + '%';
+      meter.classList.toggle('is-free', !!isFree);
+    }
   }
   function showError(msg) { var e = page.querySelector('[data-cart-error]'); e.innerHTML = msg; e.hidden = !msg; }
 

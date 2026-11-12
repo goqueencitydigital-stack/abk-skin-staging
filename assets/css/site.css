@@ -1656,3 +1656,41 @@ html { font-size: clamp(15.5px, calc(9.8px + .48vw), 18.5px); }
 .shop-hero-media.shop-hero-dose { width: min(100%, 460px); justify-self: center; }
 .shop-hero-media.shop-hero-dose img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 50%; border-radius: 20px; }
 @media (min-width: 960px) { .shop-hero-media.shop-hero-dose { justify-self: end; } }
+
+/* ---------- Cart: free-shipping meter ---------- */
+.ship-meter { margin: 0 0 var(--s-4); padding: .9rem 1rem; border-radius: 14px; background: #fff; }
+.ship-meter-text { margin: 0 0 .6rem; font-size: .95rem; line-height: 1.4; }
+.ship-meter-text strong { color: var(--pink-ink); }
+.ship-bar { height: 8px; border-radius: 99px; background: #F6D7E3; overflow: hidden; }
+.ship-bar span { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #FFB0CA, #B0125F); transition: width .5s ease; }
+.ship-meter.is-free .ship-bar span { background: #B0125F; }
+.cart-totals .muted { font-weight: 500; color: #5a5a5a; font-size: .92rem; }
+.cart-totals .cart-est { border-bottom: 0; padding-top: .8rem; font-size: 1.08rem; }
+.cart-totals .cart-est dt, .cart-totals .cart-est dd { font-weight: 700; }
+.shop-note strong { color: var(--pink-ink); }
+@media (prefers-reduced-motion: reduce) { .ship-bar span { transition: none; } }
+.ship-chip { display: inline-flex; align-items: center; gap: .55rem; margin: var(--s-4) 0 0; padding: .55rem 1rem; border-radius: 99px; background: #fff; border: 1px solid #F6D7E3; font-size: .95rem; font-weight: 500; line-height: 1.35; }
+.ship-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: #B0125F; }
+/* Mckensi portrait: show the top of her head */
+.ab-person-media img[src*="mckensi-portrait"], .ab-person-media img[srcset*="mckensi-portrait"] { aspect-ratio: 1 / 1; object-position: 50% 0%; }
+@media (min-width: 900px) { .ab-team-grid .ab-person-media img { aspect-ratio: 1 / 1; } .ab-person-media img[src*="mckensi-portrait"] { object-position: 50% 0%; } }
+
+/* ---------- Consultation page ---------- */
+.cs-prep { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1rem; counter-reset: none; }
+@media (min-width: 700px) { .cs-prep { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .cs-prep { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.cs-prep li { background: #fff; border: 1px solid var(--pink-line); border-radius: 20px; padding: 1.5rem 1.4rem 1.6rem; }
+.cs-prep-n { display: inline-grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--pink); font-family: var(--f-display); font-weight: 700; margin-bottom: .9rem; }
+.cs-prep .h3 { margin: 0 0 .4rem; }
+.cs-prep p { margin: 0; color: var(--ink-2); }
+.cs-prep a { color: var(--pink-ink); font-weight: 600; }
+.cs-team { background: var(--pink-25, #FFF0F5); }
+.cs-team-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+@media (min-width: 900px) { .cs-team-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
+.cs-team-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.cs-team-img img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 10%; border-radius: 18px; display: block; }
+.cs-team-img img[src*="mckensi-portrait"] { object-position: 50% 0%; }
+.cs-team-name { margin: .8rem 0 0; font-family: var(--f-display); font-size: 1.25rem; font-weight: 700; text-transform: uppercase; }
+.cs-team-role { margin: .1rem 0 0; font-size: var(--t-sm); color: var(--ink-2); }
+.cs-all { margin: 1.75rem 0 0; }
+.cs-steps { padding-bottom: var(--s-8); }
