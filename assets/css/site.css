@@ -1826,3 +1826,16 @@ a:hover .jr-more svg { transform: translateX(4px); }
 .art2-rel { background: #FFF0F5; }
 .art2-chips-t { font-family: var(--f-display); font-weight: 700; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 .8rem; }
 .art2-more .jr-filters a { align-self: center; }
+
+/* Mobile home hero: rounded video frame, inset from the screen edges */
+@media (max-width: 899px) {
+  .hero.hero-v { background: var(--paper, #fff); padding: 10px; }
+  .hero-v .hero-film { inset: 10px; }
+  .hero-v .hero-film-frame { border-radius: 24px; }
+  .hero-v .hero-film-frame::after { border-radius: 24px; background: linear-gradient(180deg, rgba(18,18,18,.12) 0%, rgba(18,18,18,0) 32%, rgba(18,18,18,.5) 64%, rgba(18,18,18,.82) 100%); }
+  .hero-v .hero-film-toggle { top: 24px; right: calc(var(--gutter) + 10px); }
+  .hero-v .hero-copy { padding-left: 12px; padding-right: 12px; }
+}
+
+.ba-photo { margin: 0; width: min(100%, 420px); justify-self: center; border-radius: var(--radius-card, 18px); overflow: hidden; box-shadow: 0 24px 60px -32px rgba(18,18,18,.45); }
+.ba-photo picture, .ba-photo img { display: block; width: 100%; height: auto; }
