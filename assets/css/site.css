@@ -2057,3 +2057,11 @@ a:hover .jr-more svg { transform: translateX(4px); }
 .vc-list li { display: grid; grid-template-columns: 40px 1fr; gap: .9rem; align-items: center; font-size: 1.02rem; line-height: 1.4; color: rgba(255,255,255,.92); }
 .vc-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,176,202,.16); color: var(--pink); font-family: var(--f-display); font-weight: 700; font-size: .8rem; }
 .vc-side-p { margin: 0; color: rgba(255,255,255,.8); line-height: 1.6; font-size: .95rem; }
+
+/* Black Friday promo bar */
+.promo-bar { background: #121212; color: #fff; }
+.promo-bar-inner { margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: .75rem; padding-top: .55rem; padding-bottom: .55rem; text-align: center; flex-wrap: wrap; }
+.promo-bar-tag { display: inline-block; padding: .2rem .7rem; border-radius: 999px; background: var(--pink); color: #121212; font-family: var(--f-display); font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; line-height: 1.3; }
+.promo-bar-text { font-family: var(--f-display); font-weight: 600; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; }
+@media (max-width: 480px) { .promo-bar-text { font-size: .78rem; letter-spacing: .08em; } .promo-bar-tag { display: none; } }
+.promo-bar-text strong { color: var(--pink); font-weight: 700; }
