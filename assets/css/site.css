@@ -2008,3 +2008,28 @@ a:hover .jr-more svg { transform: translateX(4px); }
 .tx-consult .eyebrow { background: var(--pink); color: var(--ink); }
 .mb-anniv .eyebrow { background: var(--pink); color: var(--ink); }
 .tx-consult-media { justify-self: center; width: 100%; }
+
+/* Memberships: spacing fixes */
+.mb-why { padding-bottom: clamp(3rem, 6vw, 5.5rem); }
+.mb-plans-sec { padding-top: clamp(3rem, 6vw, 5rem); padding-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.mb-plans-sec .mt { margin-top: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: 0; max-width: 46rem; margin-left: auto; margin-right: auto; }
+.mb-plan-name { margin-top: 1.25rem; }
+.mb-plan-sum { margin-bottom: 1.25rem; }
+.mb-plan-cta { padding-top: .5rem; }
+.mb-menu:first-of-type { padding-top: .5rem; }
+.mb-menu { padding: clamp(2rem, 4vw, 3rem) 0; }
+.mb-menu:last-child { padding-bottom: 0; }
+.mb-menu-head { margin-bottom: clamp(1.5rem, 3vw, 2rem); }
+.mb-menu-title { margin-top: .75rem; }
+.mb-tiles { gap: clamp(1rem, 2vw, 1.5rem); }
+.mb-menu-note { margin-top: 1.25rem; }
+.mb-steps-sec .mb-steps { margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem); gap: clamp(1rem, 2vw, 1.5rem); }
+.mb-steps-sec .mb-steps li, .mb-why-grid li { padding: clamp(1.5rem, 2.5vw, 2rem); }
+.mb-why-grid { gap: clamp(1rem, 2vw, 1.5rem); }
+.mb-anniv-title { margin: .9rem 0 .75rem; }
+.mb-hero .tx-facts { margin-bottom: 2rem; }
+@media (min-width: 900px) { .mb-hero-copy { padding-bottom: 1rem; } .mb-hero-media { justify-self: center; } }
+@media (max-width: 899px) {
+  .mb-hero-media { max-width: 300px; width: 100%; justify-self: center; margin: .5rem auto 0; }
+  .mb-hero-grid { gap: 2.5rem; }
+}
