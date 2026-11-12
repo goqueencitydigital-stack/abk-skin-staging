@@ -2111,3 +2111,10 @@ a:hover .jr-more svg { transform: translateX(4px); }
 .ab-duo-card img { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 12%; border-radius: 24px; box-shadow: 10px 10px 0 var(--pink); }
 .ab-duo-card .ab-hero-tag { left: .6rem; right: .6rem; bottom: .6rem; padding: .55rem .75rem; }
 .ab-duo-card:focus-visible { outline: 3px solid var(--pink-ink); outline-offset: 4px; }
+/* Client story: muted autoplay with a sound button */
+.story-film { position: relative; }
+.story-sound { position: absolute; left: .7rem; top: .7rem; z-index: 2; display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; padding: .4rem .95rem .4rem .75rem; border: 0; border-radius: 999px; background: var(--pink); color: var(--ink); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 22px -10px rgba(18,18,18,.5); }
+.story-sound .ss-on { display: none; }
+.story-sound.is-on { background: rgba(29,24,19,.55); color: #fff; backdrop-filter: blur(6px); }
+.story-sound.is-on .ss-on { display: inline; } .story-sound.is-on .ss-off { display: none; }
+.story-sound:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }

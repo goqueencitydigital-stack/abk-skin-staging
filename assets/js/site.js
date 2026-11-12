@@ -46,6 +46,15 @@
     vt.addEventListener('click', function () { if (v.paused) v.play(); else v.pause(); });
   });
 
+  // Client story: plays muted on scroll; button turns sound on (restarts from the beginning) or off.
+  d.querySelectorAll('[data-story-sound]').forEach(function (b) {
+    var v = b.parentNode.querySelector('video'); if (!v) return;
+    var lab = b.querySelector('.story-sound-label');
+    var sync = function () { b.setAttribute('aria-pressed', String(!v.muted)); lab.textContent = v.muted ? 'Tap for sound' : 'Sound on'; b.classList.toggle('is-on', !v.muted); };
+    b.addEventListener('click', function () { if (v.muted) { v.muted = false; v.currentTime = 0; } else { v.muted = true; } var p = v.play(); if (p && p.catch) p.catch(function () {}); sync(); });
+    v.addEventListener('volumechange', sync); sync();
+  });
+
   // Shop search + brand filter
   d.querySelectorAll('[data-shop-tools]').forEach(function (tools) {
     var scope = tools.parentElement, q = tools.querySelector('[data-shop-q]'), b = tools.querySelector('[data-shop-brand]');
