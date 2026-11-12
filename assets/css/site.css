@@ -1768,7 +1768,7 @@ a:hover .jr-more svg { transform: translateX(4px); }
 @media (prefers-reduced-motion: reduce) { .jr-feature, .jr-card-link, .jr-card-media img, .jr-more svg { transition: none; } .jr-feature:hover, .jr-card-link:hover { transform: none; } .jr-card-link:hover .jr-card-media img { transform: none; } }
 .jr-feature { grid-template-columns: 1fr !important; }
 .jr-feature-media picture { display: block; height: 100%; }
-.jr-feature-media img { aspect-ratio: 16 / 10 !important; min-height: 0 !important; height: auto; object-position: 50% 25%; }
+.jr-feature-media img { aspect-ratio: 4 / 3 !important; min-height: 0 !important; height: auto; object-position: 50% 0% !important; }
 .jr-feature-title { font-size: clamp(1.35rem, 1.9vw, 1.65rem); }
 
 /* ---------- Journal article ---------- */
