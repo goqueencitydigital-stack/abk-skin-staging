@@ -146,13 +146,14 @@
       if (!f.checkValidity()) { f.classList.add('was-validated'); var bad = f.querySelector(':invalid'); if (bad) { bad.focus(); if (bad.reportValidity) bad.reportValidity(); } return; }
       if (v('company')) { f.reset(); say('Thank you. Your message has been sent.', 'ok'); return; }
       var data = {};
-      ['first', 'last', 'email', 'service', 'message'].forEach(function (n) { if (v(n) && keys[n]) data[keys[n]] = v(n); });
+      ['first', 'last', 'email', 'service', 'message', 'product', 'review'].forEach(function (n) { if (v(n) && keys[n]) data[keys[n]] = v(n); });
+      var rt = f.querySelector('input[name="rating"]:checked'); if (rt && keys.rating) data[keys.rating] = rt.value;
       if (ph && keys.phone) data[keys.phone] = ph;
-      btn.disabled = true; btn.setAttribute('aria-busy', 'true'); say('Sending your message\u2026');
+      btn.disabled = true; btn.setAttribute('aria-busy', 'true'); say(f.hasAttribute('data-ok') ? 'Sending your review\u2026' : 'Sending your message\u2026');
       var send = function (tok) { return fetch(API + '/form-submission-service/v4/submissions', { method: 'POST', headers: { 'content-type': 'application/json', authorization: tok }, body: JSON.stringify({ submission: { formId: formId, submissions: data } }) }); };
       token().then(function (tok) { return send(tok).then(function (r) { if (r.status === 401) { try { localStorage.removeItem(KEY); } catch (x) {} return token().then(send); } return r; }); })
         .then(function (r) { if (!r.ok) throw new Error('submit ' + r.status); return r.json(); })
-        .then(function () { f.reset(); f.classList.remove('was-validated'); say('Thank you, ' + data[keys.first].replace(/[<>&"]/g, '') + '. Your message has been sent, and ABK SKIN will reply by email.', 'ok'); if (window.abkTrack) window.abkTrack('contact-submit'); })
+        .then(function () { var nm = data[keys.first].replace(/[<>&"]/g, ''), okMsg = f.getAttribute('data-ok'); f.reset(); f.classList.remove('was-validated'); say(okMsg ? okMsg.replace('{name}', nm) : 'Thank you, ' + nm + '. Your message has been sent, and ABK SKIN will reply by email.', 'ok'); if (window.abkTrack) window.abkTrack(f.getAttribute('data-track-event') || 'contact-submit'); })
         .catch(function () { say('Sorry, your message could not be sent just now. Please try again, or email <a href="mailto:' + email + '">' + email + '</a>.', 'err'); })
         .then(function () { btn.disabled = false; btn.removeAttribute('aria-busy'); });
     });

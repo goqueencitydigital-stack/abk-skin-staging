@@ -2285,3 +2285,35 @@ img[src*="katrina-portrait-chartreuse"]{object-position:50% 0 !important}
 .qz-wrap:has(> .qz-results:not([hidden])) { max-width: 1120px; }
 @media (min-width: 1024px) { .nav-link::before { left: -.55rem; right: -.55rem; } }
 .qz-opt input:checked + .qz-opt-box { background: var(--stone); border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); transition: none; }
+
+/* ---------- Product reviews (prv-) ---------- */
+.prv { border-top: 1px solid var(--pink-line, #FFD0DF); }
+.prv-wrap { max-width: 860px; }
+.prv-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 2rem; margin-bottom: 1.25rem; }
+.prv-head .h2 { margin: 0; }
+.prv-empty { margin: 0; color: #5C5C5C; max-width: 52ch; }
+.prv-sum { margin: 0; display: flex; align-items: center; gap: .6rem; }
+.prv-stars { display: inline-flex; gap: 2px; vertical-align: middle; }
+.prv-stars svg { fill: #FFD0DF; }
+.prv-stars svg.on { fill: #B0125F; }
+.prv-list { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 1rem; }
+.prv-item { background: #FFF7FA; border: 1px solid #FFD0DF; border-radius: 14px; padding: 1.1rem 1.25rem; }
+.prv-rate { margin: 0 0 .4rem; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.prv-body { margin: 0 0 .5rem; white-space: pre-line; }
+.prv-by { margin: 0; font-size: .9rem; color: #5C5C5C; }
+.prv-mini { display: inline-flex; align-items: center; gap: .5rem; margin: -.25rem 0 .75rem; font-size: .95rem; color: #121212; text-decoration: none; }
+.prv-mini-none { color: #5C5C5C; text-decoration: underline; text-underline-offset: 3px; }
+.prv-write > summary { list-style: none; display: inline-flex; cursor: pointer; }
+.prv-write > summary::-webkit-details-marker { display: none; }
+.prv-write[open] > summary { margin-bottom: 1rem; }
+.prv-form { max-width: 640px; }
+.prv-pick { border: 0; margin: 0 0 1rem; padding: 0; }
+.prv-pick legend { font-weight: 500; margin-bottom: .35rem; padding: 0; }
+.prv-pick-row { display: inline-flex; flex-direction: row-reverse; gap: 4px; }
+.prv-pick-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.prv-pick-row label { cursor: pointer; padding: 4px; line-height: 0; border-radius: 6px; }
+.prv-pick-row label svg { fill: #FFD0DF; stroke: #B0125F; stroke-width: .8; transition: fill .15s; }
+.prv-pick-row input:checked ~ label svg,
+.prv-pick-row label:hover svg, .prv-pick-row label:hover ~ label svg { fill: #B0125F; }
+.prv-pick-row input:focus-visible + label { outline: 2px solid #121212; outline-offset: 2px; }
+.was-validated .prv-pick-row:has(input:invalid) label svg { stroke: #c0392b; }
