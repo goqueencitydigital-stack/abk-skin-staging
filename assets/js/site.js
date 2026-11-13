@@ -262,3 +262,120 @@
     restart();
   });
 })();
+
+/* Skin Care Quiz (qz-): one question at a time, result picked from real ABK services */
+(function () {
+  var root = document.querySelector('[data-quiz]');
+  if (!root) return;
+  var form = root.querySelector('[data-qz-form]');
+  var steps = [].slice.call(root.querySelectorAll('[data-qz-step]'));
+  var total = steps.length, cur = 0;
+  var countEl = root.querySelector('[data-qz-count]'), bar = root.querySelector('[data-qz-bar]'), fill = root.querySelector('[data-qz-fill]');
+  var back = root.querySelector('[data-qz-back]'), next = root.querySelector('[data-qz-next]'), err = root.querySelector('[data-qz-err]');
+  var resultsWrap = root.querySelector('[data-qz-results]');
+  root.classList.add('qz-js');
+
+  var Q1 = {
+    dry: 'that dryness or tightness is what you\u2019d most like help with',
+    breakouts: 'that breakouts and clogged pores are your main focus',
+    dull: 'that you\u2019d like to work on dullness and uneven-looking tone',
+    texture: 'that rough texture and fine lines are on your mind',
+    sensitive: 'that you want a facial your sensitive skin feels comfortable with',
+    unsure: 'that you\u2019re not sure where to start'
+  };
+  var Q2 = {
+    dry: 'your skin feels dry or tight by midday',
+    shiny: 'your skin looks shiny across most of your face by midday',
+    combo: 'you get shiny around your nose and forehead but feel dry elsewhere',
+    comfortable: 'your skin feels comfortable most days',
+    changes: 'your skin changes from day to day'
+  };
+  var PRIMARY = { dry: 'svc-glass-skin-facial', breakouts: 'svc-acne-facial', dull: 'svc-platinum-hydrafacial', texture: 'svc-dermaplaning-facial' };
+  var FIT = {
+    'svc-glass-skin-facial': 'The Glass Skin Facial is a custom facial aimed at smooth, hydrated-looking skin with a fresh, dewy finish, so it\u2019s a natural place to start.',
+    'svc-acne-facial': 'The Acne Facial is made for breakouts and congestion, and it\u2019s built around what your skin needs on the day you come in.',
+    'svc-platinum-hydrafacial': 'The Platinum HydraFacial finishes with a booster chosen for what your skin needs that day, including dullness or uneven tone.',
+    'svc-dermaplaning-facial': 'Dermaplaning gently clears away peach fuzz and built-up dead skin cells, leaving skin feeling smoother and softer.',
+    'svc-abk-glow-facial': 'The ABK Glow Facial gives you 90 minutes to lie back and relax while each step is chosen around your skin that day.',
+    'svc-basic-b-facial': 'The Basic B Facial pairs professional extractions with a custom mask and a relaxing facial massage, so you get time to unwind too.'
+  };
+
+  function val(n) { var el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.value : ''; }
+  function answers() { return { q1: val('q1'), q2: val('q2'), q3: val('q3'), q4: val('q4') }; }
+
+  function decide(a) {
+    var id, why, notes = [];
+    var s1 = 'You mentioned ' + Q1[a.q1] + ', and that ' + Q2[a.q2] + '.';
+    if (a.q4 === 'guidance') {
+      id = 'svc-consultation';
+      why = 'You\u2019d like guidance from an esthetician before choosing a treatment, and you mentioned ' + Q1[a.q1] + '. A Skin Consultation gives you one-on-one time to talk it through and leave with a plan before you book anything else.';
+    } else if (a.q3 === 'reactive') {
+      id = 'svc-consultation';
+      why = 'You mentioned that your skin reacts easily, so you\u2019re careful about what you use. Starting with a Skin Consultation lets an esthetician look at your skin and the products you use now before recommending a treatment.';
+    } else if (a.q1 === 'sensitive') {
+      id = 'svc-consultation';
+      why = s1 + ' A Skin Consultation is an easy first step: you can talk through what your skin is comfortable with, and your esthetician can suggest a facial from there.';
+    } else if (a.q4 === 'relax') {
+      id = a.q1 === 'breakouts' ? 'svc-basic-b-facial' : 'svc-abk-glow-facial';
+      why = s1 + ' ' + (a.q1 === 'unsure' ? 'The ABK Glow Facial has no fixed routine, so your aesthetician chooses each step for you while you take 90 minutes to relax.' : FIT[id]);
+    } else if (a.q1 === 'unsure') {
+      id = 'svc-consultation';
+      why = s1 + ' A Skin Consultation is made for exactly this: time to talk through your skin, look at your routine and leave knowing where to start.';
+    } else {
+      id = PRIMARY[a.q1];
+      why = s1 + ' ' + FIT[id];
+    }
+    if (id === 'svc-dermaplaning-facial' && a.q4 !== 'relax') notes.push('If fine lines are your main focus, ask your esthetician whether microneedling belongs in your plan.');
+    if (a.q3 === 'sting' && id !== 'svc-consultation') notes.push('Since some products have stung or left your skin looking red, mention that when you arrive so your esthetician knows before choosing products.');
+    if (a.q4 === 'routine') {
+      if (id === 'svc-acne-facial') notes.push('You also wanted help with a home routine. The Acne Facial includes home-care education, so you\u2019ll leave with a plan for home.');
+      else if (id === 'svc-consultation') notes.push('You also wanted help with a home routine. Your plan can include home care, so bring a list of the products you use now.');
+      else notes.push('You also wanted help with a home routine. Ask your esthetician about a simple one during your visit.');
+    }
+    return { id: id, why: why, notes: notes };
+  }
+
+  function show(i, focus) {
+    cur = i;
+    steps.forEach(function (s, k) { s.classList.toggle('is-on', k === i); s.hidden = k !== i; });
+    var label = 'Question ' + (i + 1) + ' of ' + total;
+    countEl.textContent = label;
+    bar.setAttribute('aria-valuenow', String(i + 1)); bar.setAttribute('aria-valuetext', label);
+    fill.style.width = ((i + 1) / total * 100) + '%';
+    back.hidden = i === 0;
+    next.innerHTML = i === total - 1 ? 'See My Recommendation' : 'Continue';
+    err.hidden = true;
+    if (focus) { var lg = steps[i].querySelector('legend'); if (lg) lg.focus({ preventScroll: true }); var top = form.getBoundingClientRect().top + window.scrollY - 110; if (window.scrollY > top) window.scrollTo({ top: top, behavior: 'auto' }); }
+  }
+
+  function showResult() {
+    var r = decide(answers());
+    [].forEach.call(root.querySelectorAll('[data-qz-result]'), function (el) {
+      var on = el.getAttribute('data-qz-result') === r.id;
+      el.hidden = !on;
+      if (on) {
+        el.querySelector('[data-qz-why]').textContent = r.why;
+        var note = el.querySelector('[data-qz-note]');
+        note.textContent = r.notes.join(' ');
+        note.hidden = !r.notes.length;
+      }
+    });
+    form.hidden = true; resultsWrap.hidden = false;
+    root.setAttribute('data-qz-last', r.id);
+    var h = resultsWrap.querySelector('[data-qz-result="' + r.id + '"] h2');
+    var top = root.getBoundingClientRect().top + window.scrollY - 120;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    if (h) h.focus({ preventScroll: true });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!val('q' + (cur + 1))) { err.hidden = false; var first = steps[cur].querySelector('input'); if (first) first.focus(); return; }
+    if (cur < total - 1) show(cur + 1, true); else showResult();
+  });
+  form.addEventListener('change', function () { err.hidden = true; });
+  back.addEventListener('click', function () { if (cur > 0) show(cur - 1, true); });
+  root.querySelector('[data-qz-edit]').addEventListener('click', function () { resultsWrap.hidden = true; form.hidden = false; show(total - 1, true); });
+  root.querySelector('[data-qz-retake]').addEventListener('click', function () { form.reset(); resultsWrap.hidden = true; form.hidden = false; root.removeAttribute('data-qz-last'); show(0, true); });
+  show(0, false);
+})();
