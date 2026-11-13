@@ -2207,3 +2207,7 @@ a:hover .jr-more svg { transform: translateX(4px); }
   .fs-h{font-size:clamp(1.8rem,8vw,2.4rem)}
 }
 @media (prefers-reduced-motion:reduce){.fs-dot{transition:none}}
+
+/* Footer agency credit */
+.f-credit a{color:rgba(251,250,247,.8);text-decoration:underline;text-decoration-color:rgba(255,176,202,.5);text-underline-offset:3px;transition:color .2s}
+.f-credit a:hover,.f-credit a:focus-visible{color:#FFB0CA}
