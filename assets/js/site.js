@@ -189,19 +189,33 @@
       if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('reveal'); io.observe(el); }
     });
   }
-  // ---------- Journal topic filters ----------
+  // ---------- Journal topic filters and search ----------
   (function () {
     var bar = d.querySelector('[data-jr-filters]'), grid = d.querySelector('[data-jr-grid]');
     if (!bar || !grid) return;
-    var status = d.querySelector('[data-jr-status]');
+    var status = d.querySelector('[data-jr-status]'), input = d.querySelector('[data-jr-search]'), empty = d.querySelector('[data-jr-empty]'), reset = d.querySelector('[data-jr-reset]');
+    var topic = 'all', timer;
+    function apply() {
+      var q = input ? input.value.trim().toLowerCase() : '', words = q.split(/\s+/).filter(Boolean), shown = 0, per = {};
+      grid.querySelectorAll('.jr-card').forEach(function (li) {
+        var t = li.getAttribute('data-topic'), txt = li.getAttribute('data-text') || '';
+        var on = (topic === 'all' || t === topic) && words.every(function (w) { return txt.indexOf(w) > -1; });
+        li.hidden = !on; if (on) { shown++; per[t] = (per[t] || 0) + 1; li.classList.add('is-in'); }
+      });
+      grid.querySelectorAll('[data-group]').forEach(function (g) { g.hidden = !per[g.getAttribute('data-group')] || topic !== 'all' || !!q; });
+      grid.classList.toggle('is-filtered', topic !== 'all' || !!q); grid.classList.toggle('is-searching', !!q);
+      if (empty) empty.hidden = shown > 0;
+      if (status) status.textContent = shown ? 'Showing ' + shown + (shown === 1 ? ' guide' : ' guides') : 'No guides match';
+    }
     bar.addEventListener('click', function (e) {
       var b = e.target.closest('[data-jr-filter]');
       if (!b) return;
-      var t = b.getAttribute('data-jr-filter'), shown = 0;
+      topic = b.getAttribute('data-jr-filter');
       bar.querySelectorAll('[data-jr-filter]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      grid.querySelectorAll('[data-topic]').forEach(function (li) { var on = t === 'all' || li.getAttribute('data-topic') === t; li.hidden = !on; if (on) { shown++; li.classList.add('is-in'); } });
-      if (status) status.textContent = 'Showing ' + shown + (shown === 1 ? ' guide' : ' guides');
+      apply();
     });
+    if (input) input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(apply, 120); });
+    if (reset) reset.addEventListener('click', function () { if (input) input.value = ''; topic = 'all'; bar.querySelectorAll('[data-jr-filter]').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-jr-filter') === 'all' ? 'true' : 'false'); }); apply(); if (input) input.focus(); });
   })();
   // ---------- Article table of contents ----------
   (function () {
