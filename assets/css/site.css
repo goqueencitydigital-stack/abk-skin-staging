@@ -2675,3 +2675,26 @@ a.promo-bar-text:hover, a.promo-bar-text:focus-visible { text-decoration: underl
 @media (max-width: 759px) { .bfd-tile { min-height: 240px; } .bfd-row-5 li:last-child { grid-column: 1 / -1; } .bfd-row-5 li:last-child .bfd-tile { min-height: 220px; } }
 .bfd-tile-shot picture, .bfd-feature-shot picture { display: block; width: 100%; height: 100%; }
 .bfd-tile-shot { aspect-ratio: 1; }
+/* Deal board v2: text on solid panels, no hover effects */
+.bfd-tile { display: flex; flex-direction: column; min-height: 0; background: #121212; color: #fff; }
+.bfd-tile:not(.bfd-tile-prd)::before { content: none; }
+.bfd-tile-copy { flex: 1; }
+.bfd-tile-photo { display: block; margin: 0 .9rem .9rem; border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; background: #2a2a2a; }
+.bfd-tile-photo picture { display: block; width: 100%; height: 100%; }
+.bfd-tile-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bfd-tile-k { color: #FFB0CA; }
+.bfd-tile-prd .bfd-tile-k { color: #121212; }
+.bfd-tile:hover > picture img, .bfd-tile:hover > img, .bfd-tile-prd:hover .bfd-tile-shot img, .bfd-tile:hover .bfd-tile-photo img { transform: none; }
+.bfd-tile:hover .bfd-tile-cta { color: inherit; }
+.bfd-tile-prd:hover .bfd-tile-cta { color: #121212; }
+.bfd-intro:hover .bfd-btn, .bfd-feature:hover .bfd-btn { transform: none; }
+.bfd-more:hover { color: #121212; }
+.bfd-btn, .bfd-tile-shot img { transition: none; }
+@media (max-width: 759px) { .bfd-tile { min-height: 0; } .bfd-row-5 li:last-child .bfd-tile { min-height: 0; } .bfd-row-5 li:last-child .bfd-tile-photo { aspect-ratio: 16 / 9; } }
+.bfd-tile.bfd-tile-prd { background: #FFF0F5; color: #121212; }
+.bfd-tile.bfd-tile-prd .bfd-tile-k { color: #121212; }
+.bfd-tile.bfd-tile-prd .bfd-tile-big { color: #B0125F; }
+.bfd-tile.bfd-tile-prd .bfd-tile-n s { opacity: 1; color: #5C5C5C; }
+.bfd-tile-copy { flex: 0 0 auto; }
+.bfd-tile-photo, .bfd-tile-shot { margin-top: auto; }
+.bfd-points span { color: rgba(255,255,255,.85); }
