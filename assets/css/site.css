@@ -2698,3 +2698,18 @@ a.promo-bar-text:hover, a.promo-bar-text:focus-visible { text-decoration: underl
 .bfd-tile-copy { flex: 0 0 auto; }
 .bfd-tile-photo, .bfd-tile-shot { margin-top: auto; }
 .bfd-points span { color: rgba(255,255,255,.85); }
+
+/* Mobile fixes: stop sliders stretching the page, add slider arrows */
+html, body { overflow-x: clip; }
+.bfb-grid, .fs-track, .tr-grid, .reels-row, .cat-nav, .tabs, .rv-track { position: relative; }
+.bfb-card, .fs-slide, .tr-card, .reel { position: relative; }
+.sl-wrap { position: relative; }
+.sl-arrow { display: none; }
+@media (max-width: 900px) {
+  .sl-wrap.sl-on > .sl-arrow { display: grid; place-items: center; position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 42px; height: 42px; border-radius: 50%; border: 0; background: #121212; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); cursor: pointer; padding: 0; }
+  .sl-wrap.sl-on > .sl-arrow[hidden] { display: none; }
+  .sl-wrap > .sl-prev { left: 6px; }
+  .sl-wrap > .sl-next { right: 6px; }
+  .sl-wrap-sm.sl-on > .sl-arrow { width: 32px; height: 32px; }
+  .sl-wrap-sm.sl-on > .sl-arrow svg { width: 14px; height: 14px; }
+}

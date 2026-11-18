@@ -394,3 +394,35 @@
   root.querySelector('[data-qz-retake]').addEventListener('click', function () { form.reset(); resultsWrap.hidden = true; form.hidden = false; root.removeAttribute('data-qz-last'); show(0, true); });
   show(0, false);
 })();
+
+/* Mobile slider arrows: show tap-able arrows on every horizontal slider so visitors know it scrolls */
+(function () {
+  var SEL = '.bfb-grid, .fs-track, .tr-grid, .reels-row, .cat-nav, .tabs, .bf-bundle-row, .home-bf-bundles';
+  var L = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var R = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function setup(el) {
+    if (el.parentNode.classList.contains('sl-wrap')) return;
+    var w = document.createElement('div');
+    w.className = 'sl-wrap' + (el.matches('.cat-nav, .tabs') ? ' sl-wrap-sm' : '');
+    el.parentNode.insertBefore(w, el); w.appendChild(el);
+    var p = document.createElement('button'), n = document.createElement('button');
+    p.type = n.type = 'button'; p.className = 'sl-arrow sl-prev'; n.className = 'sl-arrow sl-next';
+    p.setAttribute('aria-label', 'Scroll left'); n.setAttribute('aria-label', 'Scroll right');
+    p.innerHTML = L; n.innerHTML = R; w.appendChild(p); w.appendChild(n);
+    function step() { return Math.max(el.clientWidth * 0.8, 160); }
+    p.addEventListener('click', function () { el.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    n.addEventListener('click', function () { el.scrollBy({ left: step(), behavior: 'smooth' }); });
+    function upd() {
+      var max = el.scrollWidth - el.clientWidth;
+      var on = max > 8 && getComputedStyle(el).overflowX !== 'visible';
+      w.classList.toggle('sl-on', on);
+      p.hidden = !on || el.scrollLeft <= 4;
+      n.hidden = !on || el.scrollLeft >= max - 4;
+    }
+    el.addEventListener('scroll', upd, { passive: true });
+    window.addEventListener('resize', upd);
+    upd(); setTimeout(upd, 600);
+  }
+  function init() { document.querySelectorAll(SEL).forEach(setup); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
