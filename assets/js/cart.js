@@ -186,7 +186,7 @@
       var nm = href ? '<a href="' + esc(href) + '">' + esc(name) + '</a>' : esc(name);
       return '<li class="cart-line" data-line="' + esc(li.id) + '">' +
         '<div class="cart-img">' + (img ? '<img src="' + esc(img) + '" alt="" width="120" height="144">' : '') + '</div>' +
-        '<div class="cart-info"><h2 class="cart-name">' + nm + '</h2><p class="cart-unit">' + esc(money(li.price)) + ' each</p>' + warn +
+        '<div class="cart-info"><h2 class="cart-name">' + nm + '</h2><p class="cart-unit">' + (li.fullPrice && Number(li.fullPrice.amount) > Number(li.price.amount) ? '<s class="was">' + esc(money(li.fullPrice)) + '</s> ' : '') + esc(money(li.price)) + ' each</p>' + warn +
         '<div class="cart-actions"><div class="qty"><button type="button" class="qty-btn" data-line-dec aria-label="Decrease quantity of ' + esc(name) + '"' + (li.quantity <= 1 ? ' disabled' : '') + '>&minus;</button>' +
         '<span class="qty-val" aria-label="Quantity">' + li.quantity + '</span>' +
         '<button type="button" class="qty-btn" data-line-inc aria-label="Increase quantity of ' + esc(name) + '"' + (li.quantity >= max ? ' disabled' : '') + '>+</button></div>' +
@@ -194,10 +194,10 @@
         '<p class="cart-line-total">' + esc(money(li.lineItemPrice)) + '</p></li>';
     }).join('');
     var subM = cart.subtotalAfterDiscounts || cart.subtotal;
-    var full = cart.subtotal ? Number(cart.subtotal.amount) || 0 : 0, after = subM ? Number(subM.amount) || 0 : 0;
+    $('[data-cart-subtotal]').textContent = money(subM);
+    var saved = items.reduce(function (t, li) { var f = li.fullPrice ? Number(li.fullPrice.amount) || 0 : 0, pr = li.price ? Number(li.price.amount) || 0 : 0; return t + (f > pr ? (f - pr) * li.quantity : 0); }, 0);
     var saveRow = $('[data-cart-save-row]');
-    $('[data-cart-subtotal]').textContent = money(full > after ? cart.subtotal : subM);
-    if (saveRow) { saveRow.hidden = !(full - after > 0.004); if (!saveRow.hidden) $('[data-cart-save]').textContent = '\u2212$' + (full - after).toFixed(2); }
+    if (saveRow) { saveRow.hidden = !(saved > 0.004); if (!saveRow.hidden) $('[data-cart-save]').textContent = '$' + saved.toFixed(2); }
     // Shipping preview. Wix applies the same rule at checkout: $13 flat, free over $100 (US).
     var rate = +page.getAttribute('data-ship-rate') || 0, free = +page.getAttribute('data-ship-free') || 0;
     var sub = subM ? Number(subM.amount) || 0 : 0;

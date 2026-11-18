@@ -2476,3 +2476,5 @@ a.promo-bar-text:hover, a.promo-bar-text:focus-visible { text-decoration: underl
 .bf-tx-save { font-weight: 700; color: #B0125F; margin: 0 0 .5rem; }
 .center-row { justify-content: center; }
 .cart-save dd { color: #B0125F; font-weight: 600; }
+.cart-totals [hidden] { display: none !important; }
+.cart-unit .was { color: #6b6b6b; margin-right: .3em; }
