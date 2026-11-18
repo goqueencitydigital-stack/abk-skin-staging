@@ -2713,3 +2713,6 @@ html, body { overflow-x: clip; }
   .sl-wrap-sm.sl-on > .sl-arrow { width: 32px; height: 32px; }
   .sl-wrap-sm.sl-on > .sl-arrow svg { width: 14px; height: 14px; }
 }
+.mid-loc-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .mid-loc-grid { grid-template-columns: 1fr 1.1fr; align-items: start; } }
+.mid-loc-addr { font-style: normal; margin: 1.2rem 0 1.4rem; line-height: 1.6; }
