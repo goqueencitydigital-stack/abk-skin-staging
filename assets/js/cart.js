@@ -91,6 +91,62 @@
     return 'Sorry, something went wrong. Please try again, or email ' + esc('abkskinn@gmail.com') + '.';
   }
 
+  // ---------- Mini cart drawer (opens after every add to cart) ----------
+  var cdr, cdrLast;
+  function isPkg(li) { return PKGS.indexOf(li.catalogReference && li.catalogReference.catalogItemId) > -1; }
+  function closeDrawer() {
+    if (!cdr || cdr.hidden) return;
+    cdr.classList.remove('is-open'); body.classList.remove('cdr-lock');
+    setTimeout(function () { cdr.hidden = true; }, 260);
+    if (cdrLast && cdrLast.focus) cdrLast.focus();
+  }
+  function openDrawer(cart, addedId) {
+    if (!cdr) {
+      cdr = d.createElement('div'); cdr.className = 'cdr'; cdr.hidden = true;
+      cdr.innerHTML = '<div class="cdr-scrim" data-cdr-close></div><aside class="cdr-panel" role="dialog" aria-modal="true" aria-labelledby="cdr-h">' +
+        '<header class="cdr-head"><h2 id="cdr-h" class="cdr-title">Added to your cart</h2><button type="button" class="cdr-x" data-cdr-close aria-label="Close cart"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></header>' +
+        '<ul class="cdr-lines" data-cdr-lines></ul>' +
+        '<div class="cdr-foot"><dl class="cdr-totals"><div><dt>Subtotal</dt><dd data-cdr-sub></dd></div><div class="cdr-save" data-cdr-save-row hidden><dt>Black Friday savings</dt><dd data-cdr-save></dd></div></dl>' +
+        '<p class="cdr-note" data-cdr-note hidden><strong>Booking comes next.</strong> You will book your treatment visits right after checkout.</p>' +
+        '<p class="cdr-err" data-cdr-err hidden></p>' +
+        '<button type="button" class="btn btn-primary btn-block" data-cdr-checkout>Secure checkout</button>' +
+        '<a class="btn btn-block cdr-view" href="' + esc(cartUrl()) + '">View cart</a>' +
+        '<button type="button" class="link-btn cdr-keep" data-cdr-close>Keep shopping</button></div></aside>';
+      body.appendChild(cdr);
+      cdr.addEventListener('click', function (e) { if (e.target.closest('[data-cdr-close]')) closeDrawer(); });
+      d.addEventListener('keydown', function (e) {
+        if (cdr.hidden) return;
+        if (e.key === 'Escape') closeDrawer();
+        if (e.key === 'Tab') { var f = cdr.querySelectorAll('button, a[href]'), a = f[0], z = f[f.length - 1]; if (e.shiftKey && d.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && d.activeElement === z) { e.preventDefault(); a.focus(); } }
+      });
+      var co = cdr.querySelector('[data-cdr-checkout]');
+      co.addEventListener('click', function () {
+        var err = cdr.querySelector('[data-cdr-err]'); err.hidden = true;
+        co.disabled = true; co.textContent = 'Opening secure checkout\u2026';
+        Cart.checkoutUrl().then(function (url) { location.href = url; }).catch(function (x) { co.disabled = false; co.textContent = 'Secure checkout'; err.innerHTML = friendly(x); err.hidden = false; });
+      });
+    }
+    var items = (cart && cart.lineItems) || [];
+    items = items.slice().sort(function (a, b) { var A = a.catalogReference && a.catalogReference.catalogItemId === addedId, B = b.catalogReference && b.catalogReference.catalogItemId === addedId; return (B ? 1 : 0) - (A ? 1 : 0); });
+    cdr.querySelector('[data-cdr-lines]').innerHTML = items.map(function (li) {
+      var name = (li.productName && (li.productName.translated || li.productName.original)) || 'Item';
+      var img = li.image && li.image.url ? li.image.url + '/v1/fill/w_160,h_160,al_c,q_80/item.jpg' : '';
+      var just = li.catalogReference && li.catalogReference.catalogItemId === addedId;
+      return '<li class="cdr-line' + (just ? ' is-new' : '') + '"><div class="cdr-img">' + (img ? '<img src="' + esc(img) + '" alt="" width="64" height="64">' : '') + '</div>' +
+        '<div class="cdr-info"><p class="cdr-name">' + esc(name) + '</p><p class="cdr-meta">Qty ' + li.quantity + (isPkg(li) ? ' &middot; 3 visits' : '') + '</p></div>' +
+        '<p class="cdr-price">' + (li.fullPrice && Number(li.fullPrice.amount) > Number(li.price.amount) ? '<s>' + esc(money(li.fullPrice)) + '</s>' : '') + esc(money(li.lineItemPrice || li.price)) + '</p></li>';
+    }).join('');
+    cdr.querySelector('[data-cdr-sub]').textContent = money(cart.subtotalAfterDiscounts || cart.subtotal);
+    var saved = items.reduce(function (t, li) { var f = li.fullPrice ? Number(li.fullPrice.amount) || 0 : 0, pr = li.price ? Number(li.price.amount) || 0 : 0; return t + (f > pr ? (f - pr) * li.quantity : 0); }, 0);
+    var sr = cdr.querySelector('[data-cdr-save-row]'); sr.hidden = !(saved > 0.004); cdr.querySelector('[data-cdr-save]').textContent = '$' + saved.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    cdr.querySelector('[data-cdr-note]').hidden = !items.some(isPkg);
+    var n = items.reduce(function (t, li) { return t + (li.quantity || 0); }, 0);
+    cdr.querySelector('#cdr-h').textContent = 'Added to your cart' + (n > 1 ? ' (' + n + ' items)' : '');
+    cdrLast = d.activeElement;
+    cdr.hidden = false; body.classList.add('cdr-lock');
+    requestAnimationFrame(function () { cdr.classList.add('is-open'); cdr.querySelector('.cdr-x').focus(); });
+  }
+
   // ---------- Add to cart (product pages and shop cards) ----------
   d.addEventListener('click', function (e) {
     var btn = e.target.closest('[data-add-to-cart]');
@@ -108,7 +164,8 @@
       setBadge(cart);
       var msg = 'Added ' + esc(name) + (qty > 1 ? ' (' + qty + ')' : '') + ' to your cart.';
       var links = ' <a href="' + esc(cartUrl()) + '">View cart</a>';
-      if (status) status.innerHTML = msg + links; else toast(msg + links);
+      if (status) status.textContent = '';
+      openDrawer(cart, pid);
     }).catch(function (err) {
       if (status) status.textContent = friendly(err); else toast(friendly(err));
     }).then(function () { btn.disabled = false; btn.removeAttribute('aria-busy'); btn.innerHTML = label; });
@@ -211,18 +268,20 @@
     $('[data-cart-subtotal]').textContent = money(subM);
     var saved = items.reduce(function (t, li) { var f = li.fullPrice ? Number(li.fullPrice.amount) || 0 : 0, pr = li.price ? Number(li.price.amount) || 0 : 0; return t + (f > pr ? (f - pr) * li.quantity : 0); }, 0);
     var saveRow = $('[data-cart-save-row]');
-    if (saveRow) { saveRow.hidden = !(saved > 0.004); if (!saveRow.hidden) $('[data-cart-save]').textContent = '$' + saved.toFixed(2); }
+    if (saveRow) { saveRow.hidden = !(saved > 0.004); if (!saveRow.hidden) $('[data-cart-save]').textContent = '$' + saved.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
     // Shipping preview. Wix applies the same rule at checkout: $13 flat, free over $100 (US).
     var rate = +page.getAttribute('data-ship-rate') || 0, free = +page.getAttribute('data-ship-free') || 0;
     var sub = subM ? Number(subM.amount) || 0 : 0;
     var shipItems = items.filter(function (li) { return PKGS.indexOf(li.catalogReference && li.catalogReference.catalogItemId) < 0; });
     var noShip = !shipItems.length;
     var isFree = noShip || (free && sub >= free), ship = isFree ? 0 : rate;
-    var usd = function (n) { return '$' + n.toFixed(2); };
+    var usd = function (n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
     $('[data-cart-shipping]').textContent = noShip ? 'Not needed' : isFree ? 'Free' : usd(rate);
     $('[data-cart-total]').textContent = usd(sub + ship);
     var t = $('[data-ship-text]'), bar = $('[data-ship-bar]'), meter = $('[data-ship-meter]');
     if (meter) meter.hidden = noShip;
+    var pn = $('[data-cart-pkg-note]'); if (pn) pn.hidden = !items.some(isPkg);
+    var sn = $('[data-cart-ship-note]'); if (sn) sn.hidden = noShip;
     if (free && t && !noShip) {
       t.innerHTML = isFree ? '<strong>Your order ships free.</strong>' : 'You are <strong>' + usd(Math.max(0.01, free - sub)) + '</strong> away from free shipping.';
       bar.style.width = Math.min(100, sub / free * 100) + '%';

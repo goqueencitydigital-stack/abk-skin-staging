@@ -419,10 +419,50 @@
       p.hidden = !on || el.scrollLeft <= 4;
       n.hidden = !on || el.scrollLeft >= max - 4;
     }
-    el.addEventListener('scroll', upd, { passive: true });
-    window.addEventListener('resize', upd);
-    upd(); setTimeout(upd, 600);
+    // Dots under card sliders (one per card)
+    var dots = null, kids = [];
+    if (!el.matches('.cat-nav, .tabs, .home-bf-bundles')) {
+      kids = Array.prototype.filter.call(el.children, function (c) { return c.offsetParent !== null || c.nodeType === 1; });
+      if (kids.length > 1 && kids.length <= 12) {
+        dots = document.createElement('div'); dots.className = 'sl-dots'; dots.setAttribute('aria-hidden', 'true');
+        dots.innerHTML = kids.map(function () { return '<span></span>'; }).join('');
+        w.appendChild(dots);
+        Array.prototype.forEach.call(dots.children, function (dt, i) { dt.addEventListener('click', function () { el.scrollTo({ left: kids[i].offsetLeft - el.firstElementChild.offsetLeft, behavior: 'smooth' }); }); });
+      }
+    }
+    function updDots() {
+      if (!dots) return;
+      var x = el.scrollLeft, best = 0, bd = 1e9, max = el.scrollWidth - el.clientWidth;
+      kids.forEach(function (k, i) { var dd = Math.abs(k.offsetLeft - el.firstElementChild.offsetLeft - x); if (dd < bd) { bd = dd; best = i; } });
+      if (x >= max - 4) best = kids.length - 1;
+      Array.prototype.forEach.call(dots.children, function (dt, i) { dt.classList.toggle('is-on', i === best); });
+    }
+    el.addEventListener('scroll', function () { upd(); updDots(); }, { passive: true });
+    window.addEventListener('resize', function () { upd(); updDots(); });
+    upd(); updDots(); setTimeout(function () { upd(); updDots(); }, 600);
   }
   function init() { document.querySelectorAll(SEL).forEach(setup); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+/* Tabs (home Black Friday section) */
+(function () {
+  document.querySelectorAll('[data-tabs]').forEach(function (list) {
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+    function pick(t, focus) {
+      tabs.forEach(function (x) {
+        var on = x === t; x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
+        var pnl = document.getElementById(x.getAttribute('aria-controls')); if (pnl) pnl.hidden = !on;
+      });
+      if (focus) t.focus();
+      window.dispatchEvent(new Event('resize'));
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { pick(t); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key, j = k === 'ArrowRight' ? i + 1 : k === 'ArrowLeft' ? i - 1 : k === 'Home' ? 0 : k === 'End' ? tabs.length - 1 : null;
+        if (j === null) return; e.preventDefault(); pick(tabs[(j + tabs.length) % tabs.length], true);
+      });
+    });
+  });
 })();
