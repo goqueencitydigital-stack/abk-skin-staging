@@ -2739,3 +2739,50 @@ html, body { overflow-x: clip; }
 @media (min-width: 900px) { .bfx-deals { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 599px) { .bfx-deals { grid-template-columns: 1fr; } }
 .bfd-row-4.bfd-row-tx { margin-top: 0; }
+
+/* ---- Black Friday treatment packages ---- */
+.bf-buy { display: inline-flex; flex-direction: column; gap: .4rem; }
+.bf-buy-status { margin: 0; font-size: .88rem; }
+.bf-buy-status:empty { display: none; }
+.bf-buy-status a { font-weight: 700; }
+.bf-tx-price { margin: .55rem 0 0; font-family: var(--f-display); font-size: 1.35rem; font-weight: 800; color: var(--ink); }
+.bf-tx-price .was { font-size: .95rem; font-weight: 500; color: #6b6b6b; margin-right: .3rem; }
+.bf-tx-price span { display: block; font-family: inherit; font-size: .8rem; font-weight: 500; letter-spacing: .02em; color: #555; }
+.bf-callout .was { color: rgba(255,255,255,.65); }
+.bf-callout .bf-buy-status { color: #fff; }
+.bf-callout-alt { font-size: .88rem; color: rgba(255,255,255,.78); margin-top: .7rem !important; }
+.mobile-book .bf-buy { display: block; }
+.book-box .bf-buy { display: flex; }
+
+.bfk { background: #121212; color: #fff; padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 7vw, 5.5rem); }
+.bfk-hero { max-width: 760px; }
+.bfk-kicker { display: inline-block; margin: 0 0 1.1rem; padding: .3rem .85rem; border-radius: 999px; background: #FFB0CA; color: #121212; font-family: var(--f-display); font-weight: 700; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
+.bfk-title { margin: 0; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(2.3rem, 1.4rem + 4vw, 4.4rem); line-height: .98; letter-spacing: -.02em; color: #fff; }
+.bfk-title em { font-style: normal; color: #FFB0CA; display: block; }
+.bfk-lede { margin: 1.1rem 0 1.6rem; font-size: 1.1rem; line-height: 1.55; color: rgba(255,255,255,.85); }
+.bfk-grid { list-style: none; margin: clamp(2rem, 5vw, 3.2rem) 0 0; padding: 0; display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .bfk-grid { grid-template-columns: repeat(2, 1fr); } }
+.bfk-card { display: grid; grid-template-columns: 120px 1fr; gap: 1.1rem; padding: 1rem; border-radius: 18px; background: #fff; color: var(--ink); align-items: center; }
+.bfk-card[hidden] { display: none; }
+.bfk-media { border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 5; }
+.bfk-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bfk-tag { margin: 0; font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--pink-ink, #B0125F); }
+.bfk-name { margin: .3rem 0 .4rem; font-family: var(--f-display); font-size: 1.3rem; line-height: 1.15; }
+.bfk-how { margin: 0 0 .85rem; font-size: .92rem; line-height: 1.45; color: #333; }
+.bfk-steps { list-style: none; margin: clamp(2rem, 5vw, 3rem) 0 0; padding: 0; display: grid; gap: 1rem; counter-reset: bfk; }
+@media (min-width: 900px) { .bfk-steps { grid-template-columns: repeat(3, 1fr); } }
+.bfk-steps li { counter-increment: bfk; padding: 1.4rem 1.3rem; border: 1px solid rgba(255,176,202,.35); border-radius: 18px; }
+.bfk-steps li::before { content: '0' counter(bfk); display: block; font-family: var(--f-display); font-weight: 800; color: #FFB0CA; margin-bottom: .5rem; }
+.bfk-steps h3 { margin: 0 0 .35rem; font-size: 1.05rem; color: #fff; }
+.bfk-steps p { margin: 0; color: rgba(255,255,255,.8); line-height: 1.5; }
+.bfk-foot { margin: 2rem 0 0; color: rgba(255,255,255,.75); font-size: .95rem; }
+.bfk a:not(.btn) { color: #FFB0CA; }
+.bfk-body { min-width: 0; }
+.bfk-name { overflow-wrap: anywhere; }
+@media (max-width: 520px) {
+  .bfk-card { grid-template-columns: 1fr; }
+  .bfk-media { aspect-ratio: 4 / 3; }
+  .bfk-media img { object-position: center 30%; }
+  .bfk-card .btn { width: 100%; justify-content: center; }
+  .bfk-hero .btn-row .btn { width: 100%; justify-content: center; }
+}

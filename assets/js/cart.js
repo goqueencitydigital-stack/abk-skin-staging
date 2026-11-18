@@ -10,6 +10,7 @@
   var API = 'https://www.wixapis.com';
   var KEY = 'abk.wix.session.v1';
   var MAX_QTY = 10;
+  var PKGS = (body.getAttribute('data-bf-pkgs') || '').split(',').filter(Boolean);
 
   // ---------- Session tokens ----------
   function readSession() { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch (e) { return null; } }
@@ -52,8 +53,14 @@
     remove: function (id) { return call('POST', '/ecom/v1/carts/current/remove-line-items', { lineItemIds: [id] }).then(function (j) { return j.cart; }); },
     checkoutUrl: function () {
       var here = cartUrl();
-      return call('POST', '/ecom/v1/carts/current/create-checkout', { channelType: 'WEB' }).then(function (j) {
-        return call('POST', '/redirect-session/v1/redirect-session', { ecomCheckout: { checkoutId: j.checkoutId }, callbacks: { postFlowUrl: here, thankYouPageUrl: here + (here.indexOf('?') > -1 ? '&' : '?') + 'thanks=1' } });
+      return Cart.get().then(function (cart) {
+        // Black Friday treatment packages: after payment, send the buyer to the booking screen.
+        var bought = (cart && cart.lineItems || []).map(function (li) { return li.catalogReference && li.catalogReference.catalogItemId; }).filter(function (id) { return PKGS.indexOf(id) > -1; });
+        try { localStorage.setItem(KEY + '.bfpkgs', JSON.stringify(bought)); } catch (e) {}
+        var thanks = bought.length ? location.origin + '/black-friday/book/index.html?thanks=1' : here + (here.indexOf('?') > -1 ? '&' : '?') + 'thanks=1';
+        return call('POST', '/ecom/v1/carts/current/create-checkout', { channelType: 'WEB' }).then(function (j) { return { j: j, thanks: thanks }; });
+      }).then(function (o) {
+        return call('POST', '/redirect-session/v1/redirect-session', { ecomCheckout: { checkoutId: o.j.checkoutId }, callbacks: { postFlowUrl: here, thankYouPageUrl: o.thanks } });
       }).then(function (j) { return j.redirectSession.fullUrl; });
     }
   };
@@ -207,12 +214,15 @@
     // Shipping preview. Wix applies the same rule at checkout: $13 flat, free over $100 (US).
     var rate = +page.getAttribute('data-ship-rate') || 0, free = +page.getAttribute('data-ship-free') || 0;
     var sub = subM ? Number(subM.amount) || 0 : 0;
-    var isFree = free && sub >= free, ship = isFree ? 0 : rate;
+    var shipItems = items.filter(function (li) { return PKGS.indexOf(li.catalogReference && li.catalogReference.catalogItemId) < 0; });
+    var noShip = !shipItems.length;
+    var isFree = noShip || (free && sub >= free), ship = isFree ? 0 : rate;
     var usd = function (n) { return '$' + n.toFixed(2); };
-    $('[data-cart-shipping]').textContent = isFree ? 'Free' : usd(rate);
+    $('[data-cart-shipping]').textContent = noShip ? 'Not needed' : isFree ? 'Free' : usd(rate);
     $('[data-cart-total]').textContent = usd(sub + ship);
     var t = $('[data-ship-text]'), bar = $('[data-ship-bar]'), meter = $('[data-ship-meter]');
-    if (free && t) {
+    if (meter) meter.hidden = noShip;
+    if (free && t && !noShip) {
       t.innerHTML = isFree ? '<strong>Your order ships free.</strong>' : 'You are <strong>' + usd(Math.max(0.01, free - sub)) + '</strong> away from free shipping.';
       bar.style.width = Math.min(100, sub / free * 100) + '%';
       meter.classList.toggle('is-free', !!isFree);
@@ -245,5 +255,13 @@
     });
   } else if (readSession()) {
     Cart.get().then(setBadge).catch(function () {});
+  }
+
+  // ---------- Black Friday booking screen (after checkout) ----------
+  var bfk = d.querySelector('[data-bfk-grid]');
+  if (bfk) {
+    var got = []; try { got = JSON.parse(localStorage.getItem(KEY + '.bfpkgs')) || []; } catch (e) {}
+    if (got.length) bfk.querySelectorAll('[data-bfk-card]').forEach(function (c) { c.hidden = got.indexOf(c.getAttribute('data-bfk-card')) < 0; });
+    if (/[?&]thanks=1/.test(location.search)) { setBadge(null); }
   }
 })();
