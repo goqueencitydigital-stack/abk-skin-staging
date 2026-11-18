@@ -2895,3 +2895,32 @@ body.cdr-lock { overflow: hidden; }
 .tr-price-after[hidden] { display: none; }
 @media (min-width: 640px) { .bfp-card .bfb-name { min-height: 2.3em; } }
 .bfk-card .bfk-name { font-size: 1.3rem; line-height: 1.15; letter-spacing: 0; }
+
+/* Permanent treatment package feature */
+.cpk-sec { padding-top: clamp(2.5rem, 5vw, 4rem); }
+.cpk-head { margin-bottom: 1.4rem; }
+.cpk-head .h2 em { font-style: normal; color: #B0125F; }
+.cpk { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); background: #fff; border: 1px solid #FFD0DF; border-radius: 20px; overflow: hidden; margin-top: 2rem; }
+.cpk-head + .cpk { margin-top: 0; }
+.cpk-media { position: relative; min-height: 320px; }
+.cpk-media picture, .cpk-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cpk-media .bfb-flag { z-index: 1; }
+.cpk-body { padding: clamp(1.4rem, 3vw, 2.4rem); display: flex; flex-direction: column; }
+.cpk-kicker { margin: 0; font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #B0125F; }
+.cpk-name { margin: .4rem 0 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.85rem); line-height: 1.15; color: #121212; }
+.cpk-inc-h { margin: 1.1rem 0 .35rem; font-weight: 700; font-size: .92rem; color: #121212; }
+.cpk-inc { margin: 0; padding: 0 0 0 1.1rem; color: #3a3a3a; line-height: 1.55; }
+.cpk-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; margin-top: 1.1rem; }
+.cpk-price .bfb-now { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.7rem; color: #121212; }
+.cpk-price .bfb-now .was { font-size: 1.05rem; font-weight: 500; color: #777; margin-right: .2rem; }
+.cpk-price .bfb-save { margin: 0; font-weight: 700; color: #B0125F; }
+.cpk-how { margin: .7rem 0 0; color: #3a3a3a; font-size: .95rem; }
+.cpk-cta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; margin-top: 1.2rem; }
+.cpk-cta .bf-buy-status:empty { display: none; }
+@media (max-width: 760px) {
+  .cpk { grid-template-columns: 1fr; }
+  .cpk-media { min-height: 0; aspect-ratio: 4 / 3; }
+  .cpk-cta .bf-buy, .cpk-cta .bf-buy .btn { width: 100%; }
+  .cpk-cta .bf-buy .btn { justify-content: center; }
+}
+.cpk .cpk-name { text-transform: none; letter-spacing: -.01em; font-size: clamp(1.35rem, 2.4vw, 1.85rem); line-height: 1.15; margin: .4rem 0 0; }
