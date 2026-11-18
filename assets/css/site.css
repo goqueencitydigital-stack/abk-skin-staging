@@ -2445,3 +2445,34 @@ img[src*="katrina-portrait-chartreuse"]{object-position:50% 0 !important}
 }
 @media (prefers-reduced-motion: reduce) { .gc-idea-link, .gc-idea-media img { transition: none; } .gc-idea-link:hover { transform: none; } }
 @media (max-width: 639px) { .gc-idea-grid { scroll-padding-inline: var(--gutter, 20px); } }
+
+/* Black Friday 2026 (Nov 18 to Nov 30) */
+a.promo-bar-text { color: #fff; text-decoration: none; }
+a.promo-bar-text:hover, a.promo-bar-text:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.tag-sale { background: #121212; color: #fff; }
+.prd-price-sm .was, .prd-price .was { color: #6b6b6b; font-weight: 400; margin-right: .3em; }
+.prd-price-sm .now, .prd-price .now { color: #B0125F; }
+.sale-note { margin: .4rem 0 0; font-size: .92rem; color: #B0125F; font-weight: 600; }
+.sale-note a { color: inherit; }
+.bf-callout { margin: 1.25rem 0; padding: 1.1rem 1.25rem; border-radius: 14px; background: #121212; color: #fff; }
+.bf-callout p { margin: 0 0 .4rem; }
+.bf-callout p:last-child { margin-bottom: 0; }
+.bf-callout a:not(.btn) { color: #FFB0CA; }
+.bf-callout-tag { display: inline-block; padding: .2rem .7rem; border-radius: 999px; background: #FFB0CA; color: #121212; font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+.bf-callout-title { font-family: var(--f-display); font-size: 1.3rem; font-weight: 700; line-height: 1.2; margin-top: .5rem !important; color: #fff; }
+.bf-callout-wide { padding: 1.6rem 1.75rem; }
+.bf-callout .btn-row { margin-top: 1rem; }
+.bf-callout .btn-primary { background: #FFB0CA; color: #121212; border-color: #FFB0CA; }
+.bf-shop { display: flex; gap: 1.25rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin: 0 0 1.5rem; padding: 1.25rem 1.5rem; border-radius: 14px; background: #121212; color: #fff; }
+.bf-shop p { margin: 0 0 .35rem; }
+.bf-shop-title { font-family: var(--f-display); font-size: 1.35rem; font-weight: 700; line-height: 1.2; margin-top: .5rem !important; }
+.bf-tx-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.bf-tx { background: #FFF0F5; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.bf-tx-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.bf-tx-media img { width: 100%; height: 100%; object-fit: cover; }
+.bf-tx-body { padding: 1rem 1.1rem 1.2rem; }
+.bf-tx-body h3 { font-size: 1.1rem; line-height: 1.25; margin: 0 0 .4rem; }
+.bf-tx-body h3 a { color: inherit; text-decoration: none; }
+.bf-tx-save { font-weight: 700; color: #B0125F; margin: 0 0 .5rem; }
+.center-row { justify-content: center; }
+.cart-save dd { color: #B0125F; font-weight: 600; }

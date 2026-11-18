@@ -116,6 +116,22 @@
     input.value = Math.max(1, Math.min(+input.max || MAX_QTY, v));
   });
 
+  // ---------- Black Friday display (Wix applies the real discount in the cart) ----------
+  var SALE_END = Date.UTC(2026, 11, 1, 5, 0, 0); // Tue, Dec 1, 2026, 12:00 AM Eastern
+  var saleOn = Date.now() < SALE_END;
+  d.querySelectorAll('[data-sale-only]').forEach(function (el) { if (!saleOn) el.hidden = true; else if (el.hasAttribute('data-sale-tag')) el.hidden = false; });
+  function applySale(el) {
+    if (!saleOn) return;
+    var pct = +el.getAttribute('data-sale') || 0, txt = el.textContent.trim();
+    if (!pct || el.getAttribute('data-sale-done') === txt) return;
+    var now = txt.replace(/\$([\d,]+(?:\.\d{1,2})?)/g, function (m, n) { return '$' + (Math.round(parseFloat(n.replace(/,/g, '')) * (100 - pct)) / 100).toFixed(2); });
+    if (now === txt) return;
+    el.innerHTML = '<s class="was">' + esc(txt) + '</s> <span class="now">' + esc(now) + '</span>';
+    el.setAttribute('data-sale-done', el.textContent.trim());
+    el.setAttribute('aria-label', 'Was ' + txt + ', now ' + now);
+  }
+  d.querySelectorAll('[data-sale]').forEach(applySale);
+
   // ---------- Live price and stock from Wix ----------
   var liveEls = d.querySelectorAll('[data-live-price][data-store-product]');
   if (liveEls.length) {
@@ -134,6 +150,7 @@
         var pd = p.priceData || {}, f = pd.formatted || {};
         if (pd.discountedPrice != null && pd.discountedPrice < pd.price) el.innerHTML = '<s class="was">' + esc(f.price) + '</s> ' + esc(f.discountedPrice);
         else if (f.price) el.textContent = f.price;
+        if (el.hasAttribute('data-sale')) { el.removeAttribute('data-sale-done'); applySale(el); }
         var inStock = p.stock ? p.stock.inStock !== false : true;
         var box = el.closest('[data-buy-box]');
         if (box) {
@@ -177,7 +194,10 @@
         '<p class="cart-line-total">' + esc(money(li.lineItemPrice)) + '</p></li>';
     }).join('');
     var subM = cart.subtotalAfterDiscounts || cart.subtotal;
-    $('[data-cart-subtotal]').textContent = money(subM);
+    var full = cart.subtotal ? Number(cart.subtotal.amount) || 0 : 0, after = subM ? Number(subM.amount) || 0 : 0;
+    var saveRow = $('[data-cart-save-row]');
+    $('[data-cart-subtotal]').textContent = money(full > after ? cart.subtotal : subM);
+    if (saveRow) { saveRow.hidden = !(full - after > 0.004); if (!saveRow.hidden) $('[data-cart-save]').textContent = '\u2212$' + (full - after).toFixed(2); }
     // Shipping preview. Wix applies the same rule at checkout: $13 flat, free over $100 (US).
     var rate = +page.getAttribute('data-ship-rate') || 0, free = +page.getAttribute('data-ship-free') || 0;
     var sub = subM ? Number(subM.amount) || 0 : 0;
