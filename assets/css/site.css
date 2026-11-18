@@ -2735,3 +2735,7 @@ html, body { overflow-x: clip; }
   .hero-v .hero-bf { display: none; }
 }
 @media (max-width: 899px) { .sl-wrap:has(> .bfb-grid) > .sl-arrow, .sl-wrap:has(> .tr-grid) > .sl-arrow { top: 110px; transform: none; } }
+.bfx-deals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (min-width: 900px) { .bfx-deals { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .bfx-deals { grid-template-columns: 1fr; } }
+.bfd-row-4.bfd-row-tx { margin-top: 0; }
