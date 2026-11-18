@@ -126,6 +126,7 @@
   // ---------- Black Friday display (Wix applies the real discount in the cart) ----------
   var SALE_END = Date.UTC(2026, 11, 1, 5, 0, 0); // Tue, Dec 1, 2026, 12:00 AM Eastern
   var saleOn = Date.now() < SALE_END;
+  if (!saleOn) d.querySelectorAll('[data-sale-after]').forEach(function (el) { el.hidden = false; });
   d.querySelectorAll('[data-sale-only]').forEach(function (el) { if (!saleOn) el.hidden = true; else if (el.hasAttribute('data-sale-tag')) el.hidden = false; });
   function applySale(el) {
     if (!saleOn) return;
