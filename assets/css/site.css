@@ -2716,3 +2716,22 @@ html, body { overflow-x: clip; }
 .mid-loc-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
 @media (min-width: 900px) { .mid-loc-grid { grid-template-columns: 1fr 1.1fr; align-items: start; } }
 .mid-loc-addr { font-style: normal; margin: 1.2rem 0 1.4rem; line-height: 1.6; }
+
+/* Mobile hero cleanup (Black Friday season) */
+.pb-cta { display: none; }
+@media (max-width: 899px) {
+  /* one announcement bar on phones: hide the pink method bar while the sale bar shows */
+  .promo-bar:not([hidden]) + .announce { display: none; }
+  .promo-bar-inner { padding-top: .7rem; padding-bottom: .7rem; }
+  .promo-bar-text { font-size: .8rem; letter-spacing: .1em; white-space: nowrap; }
+  .pb-long { display: none; }
+  .pb-cta { display: inline; color: var(--pink); }
+  /* hero: tidy copy, keep the pause button clear of the headline */
+  .hero-v .hero-lede-2 { display: none; }
+  .hero-v .hero-copy { padding-top: 76px; }
+  .hero-v .hero-film-toggle { top: 22px; right: 22px; }
+  .hero-v .hero-title { font-size: clamp(2.2rem, 10.5vw, 2.9rem); line-height: 1; }
+  /* the full Black Friday section sits right below the hero, so skip the crowded bar inside it */
+  .hero-v .hero-bf { display: none; }
+}
+@media (max-width: 899px) { .sl-wrap:has(> .bfb-grid) > .sl-arrow, .sl-wrap:has(> .tr-grid) > .sl-arrow { top: 110px; transform: none; } }
