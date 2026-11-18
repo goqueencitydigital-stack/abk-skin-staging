@@ -131,6 +131,12 @@
     el.setAttribute('aria-label', 'Was ' + txt + ', now ' + now);
   }
   d.querySelectorAll('[data-sale]').forEach(applySale);
+  var cd = d.querySelector('[data-countdown]');
+  if (cd && saleOn) {
+    var end = Date.parse(cd.getAttribute('data-countdown'));
+    var tick = function () { var ms = end - Date.now(); if (ms <= 0) { cd.hidden = true; return; } var m = Math.floor(ms / 60000); cd.querySelector('[data-cd="d"]').textContent = Math.floor(m / 1440); cd.querySelector('[data-cd="h"]').textContent = Math.floor(m / 60) % 24; cd.querySelector('[data-cd="m"]').textContent = m % 60; cd.hidden = false; };
+    tick(); setInterval(tick, 30000);
+  }
 
   // ---------- Live price and stock from Wix ----------
   var liveEls = d.querySelectorAll('[data-live-price][data-store-product]');
